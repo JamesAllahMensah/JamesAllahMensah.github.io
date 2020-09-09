@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <title>GDIT Competitor Info - Main Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="SubScripts.js"></script>
+</head>
+
+<style>
+    .companyHeader:hover{
+        cursor:pointer;
+    }
+    .button{
+        border: none;
+        background: white;
+        font-family: "Visuelt";
+    }
+
+    .button:hover{
+        color: red;
+    }
+</style>
+
+<body>
+
+<div class="header">
+    <h1 class="mainHeading">Capability Insights</h1>
+</div>
+<button class = "button" id="navMain" onclick="returnHome();" style="position: absolute; right: 25px; top: 15px;">Return to Dashboard
+</button>
+<div class="topnav">
+    <img src="logos/longlogo.png" style="width: 20%; height: 15%;>">
+    <a class="shortcut" id="Cyber" onclick = "changeCategory(this.id);">C Y B E R</a>
+    <a class="shortcut" id="Artificial Intelligence" onclick = "changeCategory(this.id);">A I</a>
+    <a class="shortcut" id="Cloud" onclick = "changeCategory(this.id);">C L O U D</a>
+</div>
+<br><br>
+<div id="numPosts">
+    <h1 id = "holdNumPosts" style = "font-size: 40px; text-align: center;">POSTS!</h1>
+</div>
+<br><br><br><br>
+<div id="canvasContainer">
+</div>
+<br><br><br><br><br><br><br><br>
+
+<div id = "postStructure" style = "width: 90%; margin: 0 auto;">
+</div>
+
+
+
+</body>
+
+<script>
+
+    /**
+     * Gets the file name based on the type of insight
+     */
+    function getFileName(){
+        if (initGraphCnt == 1){
+            return "IntelliHubBot/Cloud.txt";
+        }
+
+        let insight = localStorage.getItem("insight");
+        return "IntelliHubBot/" + insight + ".txt";
+    }
+
+    var initGraphCnt = 0;
+
+    /**
+     * Changes the content of the page based on the selected
+     * insight
+     */
+    function changeCategory(category) {
+        let currentInsight = localStorage.getItem("insight");
+        if (initGraphCnt == 1){
+            currentInsight = "Cloud";
+        }
+
+        if (category == currentInsight) {
+            return;
+        } else {
+            switch (category) {
+                case ("Cloud"):
+                    localStorage.setItem("insight", "Cloud");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Artificial Intelligence"):
+                    localStorage.setItem("insight", "Artificial Intelligence");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Cyber"):
+                    localStorage.setItem("insight", "Cyber");
+                    clearPage();
+                    loadPage(category);
+                    return;
+            }
+        }
+    }
+
+    /**
+     * Wipes the dynamic contents from page before
+     * loading new insight information
+     */
+    function clearPage(){
+        let contentHolder = document.getElementById("postStructure");
+        contentHolder.innerHTML = "";
+    }
+
+    /**
+     * Loads the headers with the toggle onclick functionality
+     */
+    function addToggleFunction(){
+        let companySpaces = document.getElementsByClassName("companyHeader");
+        for (let i = 0; i < companySpaces.length; i++){
+            companySpaces[i].addEventListener("click", toggleHeader);
+        }
+    }
+
+    /**
+     * Toggles between collapsing and expanding the competitor
+     * header when clicked
+     */
+    function toggleHeader(){
+        let companyHeader = this.id;
+        let indexes = locateCompanyIndexes(companyHeader);
+        let space = document.getElementById("companySpace" + indexes[0].toString());
+        if (space.style.display == "none"){
+            expandHeader(companyHeader);
+        }
+        else{
+            collapseHeader(companyHeader);
+        }
+    }
+
+    /**
+     * Collapses the company header, hiding the content
+     * @param companyHeader
+     */
+    function collapseHeader(companyHeader){
+        let indexes = locateCompanyIndexes(companyHeader);
+        for (let i = 0; i < indexes.length; i++){
+            let space = document.getElementById("companySpace" + indexes[i].toString());
+            space.style.display = "none";
+        }
+    }
+
+    /**
+     * Collapses the company header, revealing the content
+     * @param companyHeader
+     */
+    function expandHeader(companyHeader){
+        let indexes = locateCompanyIndexes(companyHeader);
+        for (let i = 0; i < indexes.length; i++){
+            let space = document.getElementById("companySpace" + indexes[i].toString());
+            space.style.display = "";
+        }
+    }
+
+
+    /**
+     * Returns the total number of insight posts
+     * & loads the number into the inner.HTML.
+     */
+    function updateNumPosts(data, category){
+        let companies = formatReportInfo(data);
+        let postCount = 0;
+        for (let i = 0; i < companies.length; i++){
+            if (companies[i].length != 5){
+                continue;
+            }
+            postCount++;
+        }
+
+        let statement;
+
+        switch (category){
+            case ("Cloud"):
+                statement = "CLOUD - " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Artificial Intelligence"):
+                statement = "AI - " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Cyber"):
+                statement = "CYBER - " + postCount.toString() + " " + "POSTS!"
+                break;
+        }
+
+        let postsDiv = document.getElementById("holdNumPosts");
+        postsDiv.innerHTML = statement;
+    }
+
+    /**
+     * Takes in the company name as a parameter and searches through
+     * the array, extracting the indexes of content location
+     * @param company
+     * @returns {[]}
+     */
+    function locateCompanyIndexes(company){
+        var companies = [];
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: getFileName(),
+            dataType: "text",
+            success: function (data) {
+                var uniqueCompanies = formatReportInfo(data);
+                companies = uniqueCompanies;
+            }
+        });
+
+        let indexes = [];
+        let companyIndex = companies.indexOf(company);
+        for (let i = companyIndex; i < companies.length - 1; i++){
+            let length = companies[i+1].length;
+            if (length == 5){
+                indexes.push(i+1);
+            }
+            else{
+                break;
+            }
+        }
+        return indexes;
+
+    }
+
+    /**
+     *  Loads the page with graph based on the capability
+     */
+    function loadPage(category){
+        initGraphCnt++;
+        $.ajax({
+            type: "GET",
+            url: getFileName(),
+            dataType: "text",
+            success: function (data) {
+                loadReports(data);
+                addToggleFunction();
+                updateNumPosts(data, category);
+                loadPieChart(data, category);
+            }
+
+        });
+    }
+
+
+    /**
+     * Pulls in company and post numerical data
+     * as well as company colors to init a pie chart
+     */
+    function loadPieChart(data, category){
+        let companies = getCompanies(data);
+        let sepPostNumerical = [];
+        let companyColorsPrim = [];
+        let companyColorsSec = [];
+        for (let i = 0; i < companies.length; i++){
+            let numPosts = locateCompanyIndexes(companies[i]).length;
+            sepPostNumerical.push(numPosts);
+            let primColor = getCompanyColors(companies[i])[0];
+            primColor = primColor.substring(0, primColor.length - 4) + "0.4)";
+            companyColorsPrim.push(primColor);
+            companyColorsSec.push(getCompanyColors(companies[i])[1]);
+        }
+
+        let label;
+        switch (category) {
+            case ("Cloud"):
+                label = "Cloud Insights by Competitor";
+                break;
+
+            case ("Artificial Intelligence"):
+                label = "AI Insights by Competitor";
+                break;
+
+            case ("Cyber"):
+                label = "Cyber Insights by Competitor";
+                break;
+        }
+
+        Chart.Legend.prototype.afterFit = function() {
+            this.height = this.height + 60;
+        };
+
+
+        let canvas_html = '<canvas id="myCanvas" width="3" height="1.5;"></canvas>';
+        document.getElementById("canvasContainer").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+
+        let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: companies,
+                datasets: [{
+                    label: label,
+                    data: sepPostNumerical,
+                    backgroundColor: companyColorsPrim,
+                    borderColor: companyColorsSec
+                }]
+            }
+        });
+    }
+
+    /**
+     * Returns a list with the names of all contributing competitors
+     */
+    function getCompanies(data){
+        let dataRows = data.split("\n");
+        let presentCompanies = [];
+        let companyData = [];
+        let numPosts = dataRows.length - 1;
+        for (let i = 1; i < dataRows.length - 1; i++){
+            let currentRow = dataRows[i];
+            let parsedRow = currentRow.split("\t");
+            let companyName;
+
+            companyName = parsedRow[0];
+            presentCompanies.push(companyName);
+        }
+
+        for (let i = 1; i < dataRows.length - 1; i++){
+            let dataArr = [];
+            let currentRow = dataRows[i];
+            let parsedRow = currentRow.split("\t");
+            let companyName, title, content, url, date;
+
+            companyName = parsedRow[0];
+            title = parsedRow[1];
+            content = parsedRow[2];
+            url = parsedRow[3];
+            date = parsedRow[4]
+            dataArr.push(companyName);
+            dataArr.push(title);
+            dataArr.push(content);
+            dataArr.push(url);
+            dataArr.push(date)
+            companyData.push(dataArr);
+        }
+
+        let uniqueCompanies = [];
+        uniqueCompanies = removeDuplicates(presentCompanies);
+        return uniqueCompanies;
+    }
+
+    /**
+     * Tab delimited CSV parser
+     * Uses a 2D array to sort the contents based on competitor
+     * @param data
+     * @returns {[]}
+     */
+    function formatReportInfo(data){
+        let dataRows = data.split("\n");
+        let presentCompanies = [];
+        let companyData = [];
+        let numPosts = dataRows.length - 1;
+        for (let i = 1; i < dataRows.length - 1; i++){
+            let currentRow = dataRows[i];
+            let parsedRow = currentRow.split("\t");
+            let companyName;
+
+            companyName = parsedRow[0];
+            presentCompanies.push(companyName);
+        }
+
+        for (let i = 1; i < dataRows.length - 1; i++){
+            let dataArr = [];
+            let currentRow = dataRows[i];
+            let parsedRow = currentRow.split("\t");
+            let companyName, title, content, url, date;
+
+            companyName = parsedRow[0];
+            title = parsedRow[1];
+            content = parsedRow[2];
+            url = parsedRow[3];
+            date = parsedRow[4];
+            dataArr.push(companyName);
+            dataArr.push(title);
+            dataArr.push(content);
+            dataArr.push(url);
+            dataArr.push(date);
+            companyData.push(dataArr);
+        }
+
+        let uniqueCompanies = [];
+        uniqueCompanies = removeDuplicates(presentCompanies);
+
+        for (let i = 0; i < uniqueCompanies.length; i++){
+            let companyName = uniqueCompanies[i];
+            for (let j = 0; j < companyData.length; j++){
+                let compName = companyData[j][0];
+                let compData = companyData[j];
+                if (companyName === compName){
+                    let index = uniqueCompanies.indexOf(companyName) + 1;
+                    uniqueCompanies.splice(index,0,compData);
+                    companyData[j][0] = "";
+                    i = 0;
+                    j = 0;
+                }
+            }
+        }
+        return uniqueCompanies;
+    }
+
+    /**
+     * Receives the reformatted data and dynamically
+     * updates the html page with content separated by borders
+     * includes styling
+     * @param data
+     */
+    function loadReports(data){
+        let uniqueCompanies = formatReportInfo(data);
+
+        let companyClass = document.getElementById("postStructure");
+
+        let headerCount = 0;
+
+        for (let i = 0; i < uniqueCompanies.length; i++){
+            let currentData = uniqueCompanies[i];
+            if (currentData.length != 5){
+                let companyDiv = document.createElement("div");
+                companyDiv.setAttribute("id", currentData)
+                companyDiv.setAttribute("class", "companyHeader");
+                companyClass.appendChild(companyDiv);
+
+                let label = document.createElement("h3");
+                label.setAttribute("class", "companyName");
+                label.innerHTML = currentData;
+                companyDiv.appendChild(label);
+
+                let colors = getCompanyColors(currentData);
+
+                let divStyle = document.getElementById(currentData);
+                divStyle.style.border = "3px solid " + "black";
+                divStyle.style.backgroundColor = colors[1];
+                if (colors[1] === "black"){
+                    divStyle.style.color = "white";
+                }
+                divStyle.style.width = "100%";
+                divStyle.style.height = "50px";
+                divStyle.style.lineHeight = "50px";
+
+                let labelStyle = document.getElementsByClassName("companyName")[headerCount];
+                labelStyle.style.marginLeft = "40px";
+                labelStyle.style.display = "inline-block";
+                labelStyle.style.verticalAlign = "middle";
+                labelStyle.style.lineHeight = "normal";
+
+                headerCount++;
+
+            }
+            else {
+                let title = currentData[1];
+                let content = currentData[2];
+                let url = currentData[3];
+                let date = currentData[4];
+
+                let compName = accessCompany(uniqueCompanies, i);
+                let colors = getCompanyColors(compName);
+
+                let spaceDiv = document.createElement("div");
+                spaceDiv.setAttribute("id", "companySpace" + i.toString());
+                companyClass.appendChild(spaceDiv);
+
+                let imageLink = document.createElement("a");
+                imageLink.href = url;
+                imageLink.setAttribute("id", "companyPic" + i.toString());
+                spaceDiv.appendChild(imageLink);
+
+                let img = new Image();
+                let imageSource = getUndefinedImageWithCompany(compName);
+                img.setAttribute("id", "companyPhoto" + i.toString());
+                img.src = imageSource;
+                document.getElementById("companyPic" + i.toString()).appendChild(img);
+
+                let companyTitle = document.createElement("h2");
+                companyTitle.setAttribute("id", "companyTitle" + i.toString());
+                companyTitle.innerHTML = title;
+                spaceDiv.appendChild(companyTitle);
+
+                let companyContent = document.createElement("p");
+                companyContent.setAttribute("id", "companyContent" + i.toString());
+                companyContent.innerHTML = content;
+                spaceDiv.appendChild(companyContent);
+
+                let datePost = document.createElement("h4");
+                datePost.setAttribute("id", "date" + i.toString());
+                datePost.innerHTML = date;
+                spaceDiv.appendChild(datePost);
+
+                let spaceStyle = document.getElementById("companySpace" + i.toString());
+                spaceStyle.style.paddingTop = "10px";
+                spaceStyle.style.height = "180px";
+                spaceStyle.style.display = "in-line";
+                spaceStyle.style.backgroundColor = colors[0];
+                spaceStyle.style.border = "1px solid " + colors[1];
+
+                let iLStyle = document.getElementById("companyPhoto" + i.toString());
+                iLStyle.style.marginLeft = "10px";
+                iLStyle.style.width = "200px";
+                iLStyle.style.height = "120px";
+
+                let cTStyle = document.getElementById("companyTitle" + i.toString());
+                cTStyle.style.fontSize = "20px";
+                cTStyle.style.position = "relative";
+                cTStyle.style.left = "250px";
+                cTStyle.style.bottom = "130px";
+
+                let cCStyle = document.getElementById("companyContent" + i.toString());
+                cCStyle.style.fontSize = "15px";
+                cCStyle.style.position = "relative";
+                cCStyle.style.left = "250px";
+                cCStyle.style.bottom = "125px";
+                cCStyle.style.width = "70%";
+
+                let dPStyle = document.getElementById("date" + i.toString());
+                dPStyle.style.fontSize = "15px";
+                dPStyle.style.position = "relative";
+                dPStyle.style.left = "250px";
+                dPStyle.style.bottom = "115px";
+            }
+
+        }
+
+    }
+
+    /**
+     * Takes in content information and returns the correlated
+     * competitor name
+     * @param companiesArr
+     * @param index
+     * @returns {*}
+     */
+    function accessCompany(companiesArr, index){
+        for (let i = index; i >= 0; i--){
+            if (companiesArr[i].length != 5){
+                return companiesArr[i];
+            }
+        }
+        return companiesArr[index];
+    }
+
+
+    /**
+     * Helper method
+     * removes the duplicates from an array
+     * @param hasDupl
+     * @returns {[]}
+     */
+    function removeDuplicates(hasDupl){
+        let emptyArr = [];
+        $.each(hasDupl, function(i, el){
+            if($.inArray(el, emptyArr) === -1) emptyArr.push(el);
+        });
+        return emptyArr;
+    }
+
+
+    /**
+     * Returns the competitor logo source with the competitor name
+     */
+    function getUndefinedImageWithCompany(companyName) {
+        let imageSrc = "logos/";
+        switch (companyName) {
+            case "Accenture":
+                imageSrc += "accenture";
+                break;
+            case "Booz Allen Hamilton":
+                imageSrc += "boozallen";
+                break;
+            case "CACI International":
+                imageSrc += "CACI";
+                break;
+            case "CGI Federal":
+                imageSrc += "CGI";
+                break;
+            case "Deloitte":
+                imageSrc += "deloitte";
+                break;
+            case "Jacobs Technology":
+                imageSrc += "jacobs";
+                break;
+            case "Leidos":
+                imageSrc += "leidos";
+                break;
+            case "ManTech":
+                imageSrc += "mantech";
+                break;
+            case "Peraton":
+                imageSrc += "peraton";
+                break;
+            case "Perspecta":
+                imageSrc += "perspecta";
+                break;
+            case "SAIC-Engility":
+                imageSrc += "SAIC";
+                break;
+            case "Lockheed Martin":
+                imageSrc += "lockheed";
+                break;
+        }
+        return imageSrc + ".png";
+    }
+
+    function returnHome(){
+        window.location.href = "index.html";
+    }
+
+    loadPage("Cloud");
+    locateCompanyIndexes();
+
+</script>
+</html>

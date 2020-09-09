@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="subTitle">Competitor Blog Posts</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <h1 class="mainHeading" style="font-size: 40px; text-align: center; color: #474A4C; font-family: Visuelt;">
+        Competitor Name - News Posts</h1>
+    <button class = "button" id="navSub" onclick="returnSub();" style="position: absolute; right: 25px; top: 15px;">Return to Competitor
+        Page
+    </button>
+    <button class = "button" id="navMain" onclick="returnMain();" style="position: absolute; right: 220px; top: 15px;">Return to
+        Dashboard
+    </button>
+</head>
+<style>
+    .button{
+        border: none;
+        background: white;
+        font-family: "Visuelt";
+    }
+
+    .button:hover{
+        color: red;
+    }
+</style>
+<body>
+<div class="topnav">
+    <img onclick="returnHome();" src="logos/longlogo.png" style="width: 20%; height: 15%;>">
+</div>
+<div class="newsRows">
+</div>
+
+<script>
+    getCompanyHeading();
+
+    /**
+     * Get filename based on the company name and type of source
+     */
+    function getCSVFileName(type) {
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + type + ".txt";
+        return fileName;
+
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: getCSVFileName("News"),
+            dataType: "text",
+            success: function (data) {
+                loadNewsData(data);
+            }
+
+        });
+    });
+
+    /**
+     * Loads news data and dynamically creates HTML divs from the data
+     */
+    function loadNewsData(csvInfo) {
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+        let newsClass = document.getElementsByClassName("newsRows")[0];
+        for (let i = 1; i < entries.length - 1; i++) {
+            let currRow = entries[i];
+            allRows.push(currRow);
+        }
+
+        for (let i = 0; i < allRows.length; i++) {
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+
+            let imgSource = sortedRow[25];
+            let link = sortedRow[11];
+            let newsName = sortedRow[91];
+            let title = sortedRow[6];
+            let titleSnippet = sortedRow[4];
+            if (titleSnippet.length == 0){
+                titleSnippet = localStorage.getItem("companyName") + " Blog Post";
+            }
+            let content = sortedRow[7];
+            let contentSnippet = sortedRow[5];
+
+            let shares = sortedRow[46];
+            let fShares = sortedRow[35];
+            let comments = sortedRow[47];
+            let views = sortedRow[38];
+            let visitors = sortedRow[87];
+
+            let newsDiv = document.createElement("div");
+            newsDiv.setAttribute("id", "newsRow" + i.toString());
+            newsClass.appendChild(newsDiv);
+
+            let imageLink = document.createElement("a");
+            imageLink.setAttribute("id", "imageLink" + i.toString());
+            imageLink.href = link;
+            newsDiv.appendChild(imageLink);
+
+            let img = new Image();
+            try {
+                imgSource.length;
+                if (imgSource.length == 0) {
+                    imgSource = getUndefinedImage();
+                }
+            } catch (Exception) {
+                imgSource = getUndefinedImage();
+            }
+            img.src = imgSource;
+            img.setAttribute("class", "postPicture");
+            img.setAttribute("id", "newsPic" + i.toString());
+            document.getElementById("imageLink" + i.toString()).appendChild(img);
+
+            let BlogName = document.createElement("h1");
+            BlogName.setAttribute("class", "newsName");
+            BlogName.setAttribute("id", "NameBlog" + i.toString());
+            BlogName.innerHTML = newsName;
+            newsDiv.append(BlogName);
+
+            let PostTitle = document.createElement("h1");
+            PostTitle.setAttribute("class", "postTitle");
+            PostTitle.setAttribute("id", "newsTitle" + i.toString());
+            PostTitle.innerHTML = titleSnippet;
+            newsDiv.append(PostTitle);
+
+            let postSnip = document.createElement("p");
+            postSnip.setAttribute("class", "postContent");
+            postSnip.setAttribute("id", "newsSnippet" + i.toString());
+            postSnip.innerHTML = contentSnippet;
+            newsDiv.append(postSnip);
+
+            let facebookSharesMetric = document.createElement("m2");
+            facebookSharesMetric.setAttribute("class", "metric2");
+            facebookSharesMetric.setAttribute("id", "newsFacebookShares" + i.toString());
+            facebookSharesMetric.innerHTML = "Facebook Shares: " + fShares;
+            newsDiv.appendChild(facebookSharesMetric);
+
+            let shareMetric = document.createElement("m3");
+            shareMetric.setAttribute("class", "metric3");
+            shareMetric.setAttribute("id", "newsShare" + i.toString());
+            shareMetric.innerHTML = "Twitter Shares: " + shares;
+            newsDiv.appendChild(shareMetric);
+
+            let commentMetric = document.createElement("m4");
+            commentMetric.setAttribute("class", "metric4");
+            commentMetric.setAttribute("id", "newsComment" + i.toString());
+            commentMetric.innerHTML = "Comments: " + comments;
+            newsDiv.appendChild(commentMetric);
+
+            let bDStyle = document.getElementById("newsRow" + i.toString());
+            bDStyle.style.borderTop = "1px solid black";
+            bDStyle.style.borderBottom = "1px solid black";
+            bDStyle.style.height = "250px";
+
+            let iLStyle = document.getElementById("newsPic" + i.toString());
+            iLStyle.style.width = "200px";
+            iLStyle.style.height = "120px";
+            iLStyle.style.position = "absolute";
+            iLStyle.style.marginTop = "60px";
+            iLStyle.style.marginLeft = "40px";
+
+            let bgNStyle = document.getElementById("NameBlog" + i.toString());
+            bgNStyle.style.position = "relative";
+            bgNStyle.style.left = "40px";
+            bgNStyle.style.top = "20px";
+            bgNStyle.style.color = "#474A4C";
+            bgNStyle.style.fontSize = "14px";
+
+            let pTStyle = document.getElementById("newsTitle" + i.toString());
+            pTStyle.style.position = "relative";
+            pTStyle.style.width = "700px"
+            pTStyle.style.left = "300px";
+            pTStyle.style.bottom = "25px";
+            pTStyle.style.fontSize = "24px";
+            pTStyle.style.color = "#474A4C";
+            pTStyle.style.top = "15px";
+
+            let poStyle = document.getElementById("newsSnippet" + i.toString());
+            poStyle.style.position = "relative";
+            poStyle.style.left = "300px";
+            poStyle.style.fontSize = "18px";
+            poStyle.style.bottom = "25px";
+            poStyle.style.width = "800px";
+            poStyle.style.height = "100px";
+            poStyle.style.top = "25px";
+
+            let pageReach = document.getElementById("newsFacebookShares" + i.toString());
+            pageReach.style.position = "relative";
+            pageReach.style.marginLeft = "50px";
+
+            let pageShare = document.getElementById("newsShare" + i.toString());
+            pageShare.style.position = "relative";
+            pageShare.style.marginLeft = "50px";
+
+            let pageComment = document.getElementById("newsComment" + i.toString());
+            pageComment.style.position = "relative";
+            pageComment.style.marginLeft = "50px";
+
+        }
+
+    }
+
+    function returnSub() {
+        window.location.href = "subPage.html";
+    }
+
+    function returnMain() {
+        window.location.href = "index.html";
+    }
+
+    function getUndefinedImage() {
+        let companyName = localStorage.getItem("companyName");
+        let imageSrc = "logos/";
+        switch (companyName) {
+            case "Accenture":
+                imageSrc += "accenture";
+                break;
+            case "Booz Allen Hamilton":
+                imageSrc += "boozallen";
+                break;
+            case "CACI International":
+                imageSrc += "CACI";
+                break;
+            case "CGI Federal":
+                imageSrc += "CGI";
+                break;
+            case "Deloitte":
+                imageSrc += "deloitte";
+                break;
+            case "Jacobs Technology":
+                imageSrc += "jacobs";
+                break;
+            case "Leidos":
+                imageSrc += "leidos";
+                break;
+            case "ManTech":
+                imageSrc += "mantech";
+                break;
+            case "Peraton":
+                imageSrc += "peraton";
+                break;
+            case "Perspecta":
+                imageSrc += "perspecta";
+                break;
+            case "SAIC-Engility":
+                imageSrc += "SAIC";
+                break;
+            case "Lockheed Martin":
+                imageSrc += "lockheed";
+                break;
+        }
+        return imageSrc + ".png";
+    }
+
+    /**
+     * Looks into the storage to detect the current competitor
+     * and dynamically updates the page title to match it
+     */
+    function getCompanyHeading() {
+        let companyName = localStorage.getItem("companyName");
+        document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - News Posts";
+    }
+
+</script>
+</body>
+</html>

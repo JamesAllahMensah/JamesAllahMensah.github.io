@@ -1,0 +1,119 @@
+/* Header/Blog Title */
+html {
+    background: #FFFFFF;
+    background-size: cover;
+}
+
+@font-face {
+    font-family: Visuelt;
+    src: url(VisueltPro-Light.ttf);
+}
+
+* {
+    font-family: Visuelt;
+}
+
+.header {
+    padding: 5px;
+    text-align: center;
+    background: #FDFEFE;
+    color: #797D7F;
+    font-size: 10px;
+}
+
+.subHeader {
+    padding: 5px;
+    text-align: center;
+    background: #FDFEFE;
+    color: #797D7F;
+    font-size: 50px;
+}
+
+.mainHeading{
+    text-align: center;
+    color: #474A4C;
+}
+
+/* Style the top navigation bar */
+.topnav {
+    overflow: hidden;
+    background-color: #FFFFFF;
+}
+
+/* Style the topnav links */
+.topnav a {
+    float: right;
+    display: block;
+    background-color: #FFFFFF;
+    color: #474A4C;
+    text-align: center;
+    padding: 20px 40px;
+    text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+#appStructure{
+    background-color: #D7DADC; opacity: 0.8;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 10px;
+}
+
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+/*.row {margin: 0 -5px;}*/
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.card {
+    margin-left: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 75%;
+    height: 220px;
+    text-align: center;
+    background-color: #f1f1f1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+}
+.card:hover > .banner{
+    visibility: visible;
+}
+/*.banner{*/
+/*    font-size: 13px;*/
+/*    background-color: #FFFFFF;*/
+/*    text-align: center;*/
+/*    padding-bottom: 17px;*/
+/*    visibility: hidden;*/
+/*}*/
+
+#dropDown{
+    width: 10%;
+    margin: 0 auto;
+}
+
+.shortcut:hover{
+    cursor: pointer;
+}

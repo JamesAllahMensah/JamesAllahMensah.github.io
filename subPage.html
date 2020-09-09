@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="subStyles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <title id="subTitle">Competitor Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQDXnrjdPphrQGYAyezBYQ8edwYofHA-4&callback=initMap&libraries=&v=weekly"></script>
+    <script src="./app.js"></script>
+    <script src="SubScripts.js"></script>
+    <h1 class="mainHeading" style="text-align: center; color: #474A4C; font-family: Visuelt;">Competitor Name</h1>
+
+</head>
+<body style="font-family: Visuelt">
+<button class = "button" id="navMain" onclick="returnHome();" style="position: absolute; right: 25px; top: 15px;">Return to Dashboard
+</button>
+<br><br>
+
+<button class = "button" id="manageGraph" onclick = "selectMonth();" style="position: absolute; right: 270px;">Select Month</button>
+<div id="canvasContainer" style="width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
+</div>
+
+<div id="monthStructure" style = "display: none">
+    <div class="row" >
+        <div class="column">
+            <div class="card" id="Jan"><br><br><br><br>
+            <h1 class = "MonthDesc">January</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Feb"><br><br><br><br>
+                <h1 class = "MonthDesc">February</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Mar"><br><br><br><br>
+                <h1 class = "MonthDesc">March</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Apr"><br><br><br><br>
+                <h1 class = "MonthDesc">April</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="column">
+            <div class="card" id="May"><br><br><br><br>
+                <h1 class = "MonthDesc">May</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Jun"><br><br><br><br>
+                <h1 class = "MonthDesc">June</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Jul"><br><br><br><br>
+                <h1 class = "MonthDesc">July</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Aug"><br><br><br><br>
+                <h1 class = "MonthDesc">August</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="column">
+            <div class="card" id="Sept"><br><br><br><br>
+                <h1 class = "MonthDesc">September</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Oct"><br><br><br><br>
+                <h1 class = "MonthDesc">October</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Nov"><br><br><br><br>
+                <h1 class = "MonthDesc">November</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card" id="Dec"><br><br><br><br>
+                <h1 class = "MonthDesc">December</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br><br><br><br><br>
+<div id="LatestPostTitle">
+    <h1 style="text-align: center">View Latest Posts: </h1>
+</div>
+<div class="categories" style="background-color: #D7DADC; padding-top: 50px; height: 700px">
+    <div class="row">
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 39.5%;">Blog Posts</h3>
+            <div class="card" id="blog" onclick="navBlogs();"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div id="topBlog">
+                </div>
+                <div id="middleBlog" style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="blogDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoB" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesB" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div id="bottomBlog">
+                    <h2 id="blogTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="blogContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewBlogMetric" style="background-color: #f1f1f1; position: absolute; left: 70%; top: 92%;">View Blog Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 34%;">News & Press Releases</h3>
+            <div class="card" id="news" onclick="navNews();"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div id="topNews">
+                </div>
+                <div id="middleNews" style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="newsDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoN" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesN" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div id="bottomNews">
+                    <h2 id="newsTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="newsContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewNewsMetric" style="background-color: #f1f1f1; position: absolute; left: 70%; top: 92%;">View News Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 35%;">Social Media Events</h3>
+            <label class="switch" style="margin-bottom: 20px; position: absolute;">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+            <div class="card" id="socials"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div style="position: absolute; top: 0px; padding-top: 60px; padding-left: 30px;">
+                    <img class="socialButtons" id="Twitter" onclick=navigateSelectedSocial(this.id)
+                         src="logos/twitter.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; top: 0px; right: 0px; padding-top: 60px; padding-right: 30px;">
+                    <img class="socialButtons" id="Instagram" onclick=navigateSelectedSocial(this.id)
+                         src="logos/instagram.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; bottom: 0px; padding-bottom: 60px; padding-left: 30px;">
+                    <img class="socialButtons" id="LinkedIn" onclick=navigateSelectedSocial(this.id)
+                         src="logos/linkedin.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; bottom: 0px; right: 0px; padding-bottom: 60px; padding-right: 30px;">
+                    <img ; class="socialButtons" id="Facebook"
+                         onclick=navigateSelectedSocial(this.id) src="logos/facebook.png"
+                         style="visibility: hidden; width: 160px; height: 160px">
+                </div>
+                <div class="normalCard" id="topSocials">
+                </div>
+                <div class="normalCard" id="middleSocials"
+                     style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="socialsDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoS" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesS" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div class="normalCard" id="bottomSocials">
+                    <h2 id="socialTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="socialContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewSocialMetric" onclick="navSocials()"
+                            style="background-color: #f1f1f1; position: absolute; left: 60%; top: 92%;">View Social Media Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br>
+    <div id="LatestPostLocationTitle">
+        <h1 style="text-align: center">Location Intelligence: </h1>
+    </div>
+    <br>
+    <div id="map" style="margin: 0 auto; width: 1800px; height: 500px;">
+
+    </div>
+
+</body>
+
+<script>
+
+
+    var holdDays = [];
+    var days = getDaysInMonth();
+    for (let i = 0; i < days.length; i++) {
+        let dayEntry = [];
+        let day = days[i];
+        dayEntry.push(day)
+        dayEntry.push(0);
+        holdDays.push(dayEntry);
+    }
+
+    var formattedDays = [];
+    for (let i = 0; i < holdDays.length; i++) {
+        let currentDate = holdDays[i];
+        let dateArr = currentDate[0].split(" ");
+        let specDay = dateArr[1];
+        let parsedDay = parseInt(specDay);
+        let charDay = parsedDay.toString();
+        let dateSequence = dateArr[0] + " " + charDay;
+        let holdDate = [];
+        holdDate.push(dateSequence);
+        holdDate.push(0);
+        formattedDays.push(holdDate);
+    }
+    holdDays = [];
+    holdDays = formattedDays;
+
+    /**
+     * Reads into the CSV, extracts the dates into an array
+     * @param type
+     * @returns {[]}
+     */
+    function loadDays(type) {
+        var updatedDays = [];
+        let fileName;
+        if (type === "Blog") {
+            fileName = getCSVFileName("Blog");
+        } else if (type === "News") {
+            fileName = getCSVFileName("News");
+        } else {
+            fileName = getCSVFileName("Social");
+
+        }
+
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            dataType: "text",
+            async: false,
+            success: function (data) {
+                updatedDays = loadDateInfo(data);
+            }
+
+        });
+        return updatedDays;
+
+    }
+
+    /**
+     * Compares the extracted dates with the current month
+     * and updates the frequency of current dates.
+     * @param csvInfo
+     * @returns {[]}
+     */
+    function loadDateInfo(csvInfo) {
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+        for (let i = 1; i < entries.length - 1; i++) {
+            let currRow = entries[i];
+            allRows.push(currRow);
+        }
+
+        let currDates = [];
+        for (let i = 0; i < allRows.length; i++) {   // May have to play around with the statement
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+            let date = convertDate(sortedRow[3]);
+            currDates.push(date);
+        }
+
+        // let holdDays = loadThirtyDayPeriod();
+        for (let i = 0; i < currDates.length; i++) {
+            let thisDate = currDates[i];
+            let firstPart = thisDate.split(",");
+            thisDate = firstPart[0];
+            for (let j = 0; j < holdDays.length; j++) {
+                let thatDate = holdDays[j][0];
+                if (thisDate === thatDate) {
+                    holdDays[j][1]++;
+                }
+            }
+        }
+        return holdDays;
+    }
+
+    /**
+     * Extracts geographical data from the CSV to load into
+     * the google maps API
+     * @param type
+     * @returns {[]}
+     */
+    function loadMapWithLocations(type) {
+        var loadedMapStats = [];
+        let fileName;
+        if (type === "Blog") {
+            fileName = getCSVFileName("Blog");
+        } else if (type === "News") {
+            fileName = getCSVFileName("News");
+        } else {
+            fileName = getCSVFileName("Social");
+
+        }
+
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: fileName,
+            dataType: "text",
+            success: function (data) {
+                var mapRes = loadMap(data, type);
+                loadedMapStats = mapRes;
+            }
+
+        });
+        return loadedMapStats;
+    }
+
+    /**
+     * Pulls geographical (longitude, latitude, location) data from the csv files
+     */
+    function loadMap(csvInfo, type) {
+        var mapData = [];
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+        for (let i = 1; i < entries.length - 1; i++) {
+            let currRow = entries[i];
+            allRows.push(currRow);
+        }
+
+        let size = allRows.length - 2;
+        for (let i = 0; i < allRows.length - 1; i++) {
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+            let partialLocation = sortedRow[80];
+            if (partialLocation.includes(",")) {
+                let city = partialLocation.split(",");
+                partialLocation = city[0];
+            }
+            let location = partialLocation + ", " + sortedRow[79];
+            let longitude = sortedRow[81];
+            let latitude = sortedRow[82];
+            let locationInfo = [];
+            locationInfo.push(location);
+            locationInfo.push(longitude);
+            locationInfo.push(latitude);
+            mapData.push(locationInfo);
+        }
+        return mapData;
+    }
+
+
+    /**
+     * Calls the load methods and returns a final array with
+     * locations pulled from blogs and news
+     * @returns {[]}
+     */
+    function getMapLocationInfo() {
+        let totalLocations = [];
+        let locationsFromBlogs = loadMapWithLocations("Blog");
+        let locationsFromNews = loadMapWithLocations("News");
+        totalLocations.push(locationsFromBlogs);
+        totalLocations.push(locationsFromNews);
+        return totalLocations;
+    }
+
+    function navBlogs() {
+        window.location.href = "blogs.html";
+    }
+
+    function navNews() {
+        window.location.href = "newsPosts.html";
+    }
+
+    function navSocials() {
+        window.location.href = "all.html";
+    }
+
+    function returnHome() {
+        window.location.href = "index.html";
+    }
+
+    function getCompanyHeading() {
+        let companyName = localStorage.getItem("companyName");
+        let fullMonth = getFullMonth(getCurrentMonth());
+        document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - " + fullMonth;
+    }
+
+    getCompanyHeading();
+
+    function getCSVFileName(type) {
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + type + ".txt";
+        return fileName;
+
+    }
+
+    /**
+     * Loads latest blog posts into the competitor subpage card
+     */
+    function loadLatestBlogPost() {
+        let fileName = getCSVFileName("Blog");
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractBlogDataFromCSV(data);
+                }
+
+            });
+        });
+
+    }
+
+    /**
+     * Extracts blog data from CSV and loads post data into the card
+     */
+    function extractBlogDataFromCSV(csvInfo) {
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+        allRows.push(entries[1]);
+
+        let latPost = document.getElementById("topBlog");
+        let imgSource, link, titleSnippet, contentSnippet, date, shares;
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+        imgSource = sortedRow[25];
+        if (imgSource.length == 0) {
+            imgSource = getUndefinedImage();
+        }
+        imgSource = sensorImages(localStorage.getItem("companyName"), imgSource);
+        link = sortedRow[11];
+        titleSnippet = sortedRow[4];
+        if (titleSnippet.length == 0){
+            titleSnippet = localStorage.getItem("companyName") + " Blog Post";
+        }
+        contentSnippet = sortedRow[5];
+        date = sortedRow[3];
+        shares = sortedRow[46];
+
+
+        let imageLinkB = document.createElement("a");
+        imageLinkB.setAttribute("id", "imageLinkB");
+        imageLinkB.href = link;
+        latPost.appendChild(imageLinkB);
+
+        let img = new Image();
+        img.src = imgSource;
+        img.setAttribute("id", "blogPic");
+        document.getElementById("imageLinkB").appendChild(img);
+
+        let bPic = document.getElementById("blogPic");
+        bPic.style.width = "100%";
+        bPic.style.height = "200px";
+
+        let loadDate = document.getElementById("blogDate");
+        date = convertDate(date);
+        loadDate.innerHTML = date;
+
+        let loadShares = document.getElementById("twitterSharesB");
+        loadShares.innerHTML = shares;
+        loadShares.style.left = getLeftStyling(shares);
+
+        let title = document.getElementById("blogTitle");
+        title.innerHTML = titleSnippet;
+        title.style.textAlign = "left";
+        title.style.width = "90%";
+        title.style.margin = "0 auto";
+        title.style.marginTop = "15px";
+
+        let contents = document.getElementById("blogContents");
+        contents.innerHTML = contentSnippet;
+        contents.style.textAlign = "left";
+        contents.style.width = "90%";
+        contents.style.margin = "0 auto";
+        contents.style.marginTop = "15px";
+
+    }
+
+    /**
+     * Receives filename, initiates the card dynamic element loading
+     */
+    function loadLatestNewsPost() {
+        let fileName = getCSVFileName("News");
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractNewsDataFromCSV(data);
+                }
+            });
+        });
+
+    }
+
+    /**
+     * Extracts news data from CSV and loads post data into the card
+     */
+    function extractNewsDataFromCSV(csvInfo) {
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+        allRows.push(entries[1]);
+
+
+        let latPost = document.getElementById("topNews");
+        let imgSource, link, titleSnippet, contentSnippet, date, shares;
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+
+        imgSource = sortedRow[25];
+        if (imgSource.length == 0) {
+            imgSource = getUndefinedImage();
+        }
+        imgSource = sensorImages(localStorage.getItem("companyName"), imgSource);
+        link = sortedRow[11];
+        titleSnippet = sortedRow[4];
+        if (titleSnippet.length == 0){
+            titleSnippet = localStorage.getItem("companyName") + " News Post";
+        }
+        contentSnippet = sortedRow[5];
+        date = sortedRow[3];
+        shares = (parseInt(sortedRow[35]) + parseInt(sortedRow[46])).toString();
+
+        let imageLinkN = document.createElement("a");
+        imageLinkN.setAttribute("id", "imageLinkN");
+        imageLinkN.href = link;
+        latPost.appendChild(imageLinkN);
+
+        let img = new Image();
+        img.src = imgSource;
+        img.setAttribute("id", "newsPic");
+        document.getElementById("imageLinkN").appendChild(img);
+
+        let bPic = document.getElementById("newsPic");
+        bPic.style.width = "100%";
+        bPic.style.height = "200px";
+
+        let loadDate = document.getElementById("newsDate");
+        date = convertDate(date);
+        loadDate.innerHTML = date;
+
+        let loadShares = document.getElementById("twitterSharesN");
+        loadShares.innerHTML = shares;
+        loadShares.style.left = getLeftStyling(shares);
+
+
+        let title = document.getElementById("newsTitle");
+        title.innerHTML = titleSnippet;
+        title.style.textAlign = "left";
+        title.style.width = "90%";
+        title.style.margin = "0 auto";
+        title.style.marginTop = "15px";
+
+        let contents = document.getElementById("newsContents");
+        contents.innerHTML = contentSnippet;
+        contents.style.textAlign = "left";
+        contents.style.width = "90%";
+        contents.style.margin = "0 auto";
+        contents.style.marginTop = "15px";
+
+    }
+
+
+    /**
+     * Receives filename, initiates the card dynamic element loading
+     */
+    function loadLatestSocialMediaPost() {
+        let fileName = getCSVFileName("Social");
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractSocialDataFromCSV(data);
+                }
+
+            });
+        });
+
+    }
+
+    /**
+     * Extracts socials data from CSV and loads post data into the card
+     */
+    function extractSocialDataFromCSV(csvInfo) {
+        let entries = csvInfo.split("\n");
+        let allRows = [];
+
+        let socialName, retweets, shares, likes, comments, content, user, date, link, imgSrc;
+
+        let socialClass = document.getElementsByClassName("socialRows")[0];
+        for (let i = 1; i < entries.length - 1; i++) {
+            let currRow = entries[i];
+            allRows.push(currRow);
+        }
+        allRows = reformatRows(allRows);
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+        sortedRow = inFieldParser(sortedRow);
+
+        let latPost = document.getElementById("topSocials");
+
+        if (sortedRow[0] === "Twitter") {
+            imgSrc = "logos/twitter.png";
+            user = sortedRow[1];
+            date = sortedRow[2];
+            if (!date.includes("ago")){
+                let parsedDate = date.split(" ");
+                date = parsedDate[2];
+                date = convertDate(date);
+            }
+            link = sortedRow[3];
+            content = sortedRow[4];
+            let totalMetrics = sortedRow[6].split(",");
+
+            retweets = totalMetrics[0].trim();
+            let separationIndex = separateMetrics(retweets);
+            let numMetrics = retweets.substring(0, separationIndex);
+            retweets = numMetrics;
+            retweets = retweets.substring(1, retweets.length);
+
+            likes = totalMetrics[1];
+            separationIndex = separateMetrics(likes);
+            numMetrics = likes.substring(0, separationIndex);
+            likes = numMetrics
+            likes = likes.substring(0, likes.length);
+
+            let imageLinkS = document.createElement("a");
+            imageLinkS.setAttribute("id", "imageLinkS");
+            imageLinkS.href = link;
+            latPost.appendChild(imageLinkS);
+
+            let img = new Image();
+            img.src = imgSrc;
+            img.setAttribute("id", "socialPic");
+            document.getElementById("imageLinkS").appendChild(img);
+
+            let bPic = document.getElementById("socialPic");
+            bPic.style.width = "100%";
+            bPic.style.height = "200px";
+
+            let loadDate = document.getElementById("socialsDate");
+            loadDate.innerHTML = date;
+
+            let loadShares = document.getElementById("twitterSharesS");
+            loadShares.innerHTML = retweets;
+            loadShares.style.left = getLeftStyling(retweets);
+
+            let title = document.getElementById("socialTitle");
+            title.innerHTML = user;
+            title.style.marginTop = "15px";
+            title.style.textAlign = "left";
+            title.style.width = "90%";
+            title.style.margin = "0 auto";
+            title.style.marginTop = "15px";
+
+            let contents = document.getElementById("socialContents");
+            contents.innerHTML = content;
+            contents.style.textAlign = "left";
+            contents.style.width = "90%";
+            contents.style.margin = "0 auto";
+            contents.style.marginTop = "15px";
+
+        } else {
+            imgSrc = "logos/facebook.png";
+            user = sortedRow[1];
+            date = sortedRow[2];
+            let parsedDate = date.split(" ");
+            date = parsedDate[2];
+            date = convertDate(date) + "20";
+            link = sortedRow[3];
+            content = sortedRow[4];
+            let totalMetrics = sortedRow[6].split(",");
+
+            shares = totalMetrics[0].trim();
+            let separationIndex = separateMetrics(shares);
+            let numMetrics = shares.substring(0, separationIndex);
+            shares = numMetrics;
+            shares = shares.substring(1, shares.length);
+
+
+            let imageLinkS = document.createElement("a");
+            imageLinkS.setAttribute("id", "imageLinkS");
+            imageLinkS.href = link;
+            latPost.appendChild(imageLinkS);
+
+            let origPicture = document.getElementById("twitterLogoS");
+            origPicture.src = "logos/facebookLogo.png";
+
+            let img = new Image();
+            img.src = imgSrc;
+            img.setAttribute("id", "socialPic");
+            document.getElementById("imageLinkS").appendChild(img);
+
+            let bPic = document.getElementById("socialPic");
+            bPic.style.width = "100%";
+            bPic.style.height = "200px";
+
+            let loadDate = document.getElementById("socialsDate");
+            loadDate.innerHTML = date;
+
+            let loadShares = document.getElementById("twitterSharesS");
+            loadShares.innerHTML = shares;
+            loadShares.style.left = getLeftStyling(shares);
+
+            let title = document.getElementById("socialTitle");
+            title.innerHTML = user;
+            title.style.marginTop = "15px";
+            title.style.textAlign = "left";
+            title.style.width = "90%";
+            title.style.margin = "0 auto";
+            title.style.marginTop = "15px";
+
+            let contents = document.getElementById("socialContents");
+            contents.innerHTML = content;
+            contents.style.textAlign = "left";
+            contents.style.width = "90%";
+            contents.style.margin = "0 auto";
+            contents.style.marginTop = "15px";
+        }
+    }
+
+    /**
+     * Finds the index in which the concatenated string must be cut
+     */
+    function separateMetrics(metric) {
+        for (let i = 1; i < metric.length; i++) {
+            let character = metric[i];
+            if (!isCharDigit(character)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Takes in a char within a string, determines if its a digit.
+     */
+    function isCharDigit(n) {
+        return !!n.trim() && n > -1;
+    }
+
+    /**
+     * Reformats the format of the socials page for easier parsing
+     */
+    function reformatRows(csvRows) {
+        let newArr = [];
+        try {
+            let i = 0;
+            while (i < csvRows.length) {
+                let currentRow = csvRows[i];
+                let separateData = currentRow.split("\t");    // wouldn't identify tab...
+                let socialPlatform = separateData[0];
+                if (socialPlatform === "Twitter") {
+                    let nextRow = csvRows[i + 1] + ",";
+                    let succRow = csvRows[i + 2];
+                    let combinedRow = currentRow + "," + nextRow + succRow;
+                    newArr.push(combinedRow);
+                    i += 3;
+                } else {
+                    let nextRow = csvRows[i + 1] + ",";
+                    let succRow = csvRows[i + 2] + ",";
+                    let finalRow = csvRows[i + 3];
+                    let combinedRow = currentRow + "," + nextRow + succRow + finalRow;
+                    newArr.push(combinedRow);
+                    i += 4;
+                }
+            }
+            return newArr;
+        } catch (err) {
+            return newArr;
+        }
+    }
+
+    /**
+     * Advanced social CSV parser that ignores the infield tabs
+     */
+    function inFieldParser(csvRows) {
+        let finalArr = [];
+        let quoteCnt = 0;
+        for (let i = 0; i < csvRows.length; i++) {
+            let currRow = csvRows[i];
+            currRow = currRow.trim();
+            let combinedArr = [];
+            if (countOccurences(currRow) % 2 == 0) {
+                finalArr.push(currRow);
+                continue;
+            }
+            if (currRow[0] === "\"") {
+                quoteCnt = countOccurences(currRow);
+                while (quoteChecker(currRow, quoteCnt)) {
+                    combinedArr.push(currRow);
+                    i += 1;
+                    currRow = csvRows[i];
+                    quoteCnt += countOccurences(currRow);
+                    if (quoteCnt % 2 == 0) {
+                        combinedArr.push(currRow);
+                    }
+                }
+                let fulLStatement = "";
+                for (let i = 0; i < combinedArr.length; i++) {
+                    fulLStatement += " " + combinedArr[i];
+                }
+                finalArr.push(fulLStatement);
+            } else {
+                finalArr.push(currRow);
+            }
+        }
+        return finalArr;
+    }
+
+    /**
+     * Checks if the row contains the same amount of opening and closing braces
+     * Used within the inFieldParser function
+     */
+    function quoteChecker(row, count) {
+        if (count % 2 != 0) {
+            if ((countOccurences(row) + count % 2 != 0)) {
+                return true;
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns a count of the number of parenthesis within a row
+     * Used in the quoteChecker function
+     */
+    function countOccurences(row) {
+        try {
+            let cnt = 0;
+            for (let i = 0; i < row.length; i++) {
+                let character = row[i];
+                if (character === "\"") {
+                    cnt++;
+                }
+            }
+            return cnt;
+        } catch (Exception) {
+            return 1;
+        }
+    }
+
+    /**
+     * Reformats the data into a more readable format
+     */
+    function convertDate(date) {
+        let correctDate = "";
+        let numData = date.split("/");
+        let month = getMonth(numData[0]);
+        let day = numData[1];
+        let splitYear = numData[2].split(" ");
+        let year = splitYear[0];
+        correctDate = month + " " + day + ", " + year;
+        return correctDate + "20";
+    }
+
+    /**
+     * Identifies the current month and loads
+     * all of the days of the month into an array
+     * @returns {[]}
+     */
+    function getDaysInMonth() {
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = getNumericMonth(dateData[1]);
+        let year = parseInt(dateData[3]);
+
+        var date = new Date(year, 6, 1);
+        // var date = new Date(year, month, 1);     // REMOVE HARDCODING
+        var days = [];
+        while (date.getMonth() === 6) {
+        // while (date.getMonth() === month) {      // REMOVE HARDCODING
+            let dailyDate = new Date(date).toString();
+            let dailyDateData = dailyDate.split(" ");
+            let formattedDate = dailyDateData[1] + " " + dailyDateData[2];
+            days.push(formattedDate);
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
+
+    /**
+     * Adds all the month daily data frequencies together
+     * @returns {[]}
+     */
+    function parseDailyDataForFrequency() {
+        let dailyDataB = loadDays("Blog");
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadDays("News");
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
+    /**
+     * Uses Charts.JS to load the line graph using the frequencies
+     * @param companyName
+     */
+    function initLineGraph(companyName) {
+        let pastThirtyDays = getDaysInMonth();
+        let averageGDIT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 40, 23, 68, 44, 17, 50, 25, 20, 57, 21, 37, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        Chart.Legend.prototype.afterFit = function() {
+            this.height = this.height + 20;
+        };
+
+        let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
+        document.getElementById("canvasContainer").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+        let dailyData = parseDailyDataForFrequency()
+        let colors = getCompanyColors(companyName);
+        let thisMonth = getCurrentMonth();
+        let fullMonth = getFullMonth(thisMonth);
+        console.log(fullMonth);
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: pastThirtyDays,
+                datasets: [{
+                    label: companyName + ' Activity',
+                    data: dailyData,
+                    backgroundColor: [
+                        colors[0]
+                    ],
+                    borderColor: [
+                        colors[1]
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: ' GDIT Activity',
+                    data: averageGDIT,
+                    borderColor: [
+                       'grey'
+                    ],
+                    borderWidth: 1,
+                    hidden: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Using the google maps api, geographic data is loaded from CSVs
+     * Different marker colors are pinned depending on location source
+     */
+    function initMap() {
+        var loc = getMapLocationInfo();
+        var blogLocations = loc[0];
+        var newsLocations = loc[1];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4.5,
+            center: new google.maps.LatLng(39, -100),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < blogLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(blogLocations[i][2], blogLocations[i][1]),
+                map: map,
+                icon: "icons/blueMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(blogLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+        for (i = 0; i < newsLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(newsLocations[i][2], newsLocations[i][1]),
+                map: map,
+                icon: "icons/redMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(newsLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
+    /**
+     * Dynamically updates the color of the cards based on the company
+     */
+    function colorCards(){
+        let companyName = localStorage.getItem("companyName");
+        let colors = getCompanyColors(companyName);
+
+        let cards = document.getElementsByClassName("card");
+        for (let i = 0; i < 12; i++){
+            cards[i].style.background = colors[0];
+            cards[i].style.border = "5px double " + colors[1];
+        }
+    }
+
+    /**
+     * Dynamically updates the shown card metrics
+     */
+    function updateCardStats(){
+        let monthFrequency = parseDailyDataForFrequency();
+
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        // let monthIndex = getNumericMonth(dateData[1]);      // MONTH HARDCODING
+        let monthIndex = 6;
+
+        let sumPosts = 0;
+        for (let i = 0; i < monthFrequency.length; i++){
+            sumPosts = sumPosts + monthFrequency[i];
+        }
+
+        let numPosts = document.getElementsByClassName("holdPostData");
+        let cards = document.getElementsByClassName("card");
+        for (let i = 0; i < 12; i++){
+            // if (i == monthIndex){
+            if (i == 6){
+                numPosts[i].innerHTML = (sumPosts + " Posts").italics();
+                cards[i].style.boxShadow = "0 5px 15px yellow";
+                cards[i].addEventListener("click", emergeGraph);
+                continue;
+            }
+            numPosts[i].innerHTML = ("No Posts Available").bold();
+        }
+    }
+
+    /**
+     * Reveals the graph after a month is selected
+     */
+    function emergeGraph(){
+        let monthCards = document.getElementById("monthStructure");
+        monthCards.style.display = "none";
+
+        let graph = document.getElementById("canvasContainer");
+        graph.style.width = "1400px";
+        graph.style.height = "600px";
+        graph.style.visibility = "visible";
+
+        let graphButton = document.getElementById("manageGraph");
+        graphButton.style.visibility = "visible";
+
+        let closeButton = document.getElementById("closeGraph");
+        closeButton.style.visibility = "visible";
+    }
+
+    /**
+     * Waits until user selects a month before loading the graph.
+     */
+    function selectMonth(){
+        let graph = document.getElementById("canvasContainer");
+        graph.style.width = "0px";
+        graph.style.height = "0px";
+        graph.style.visibility = "hidden";
+
+        let monthCards = document.getElementById("monthStructure");
+        monthCards.style.display = "block";
+
+        let graphButton = document.getElementById("manageGraph");
+        graphButton.style.visibility = "hidden";
+
+        let closeButton = document.getElementById("closeGraph");
+        closeButton.style.visibility = "hidden";
+    }
+
+    updateCardStats();
+    colorCards();
+    loadLatestBlogPost();
+    loadLatestNewsPost();
+    loadLatestSocialMediaPost();
+    initLineGraph(localStorage.getItem("companyName"));
+
+</script>
+
+</html>
