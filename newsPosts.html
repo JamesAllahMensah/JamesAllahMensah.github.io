@@ -45,6 +45,16 @@
     }
 
     $(document).ready(function () {
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = getFullMonth(dateData[1]);
+        let monthIndex = getNumericMonthFromFull(localStorage.getItem("month"));
+        if (month != localStorage.getItem("month")){
+            let storageData = pullFromStorage();
+            loadNewsData(storageData[monthIndex][1]);
+            return;
+        }
+
         $.ajax({
             type: "GET",
             url: getCSVFileName("News"),
@@ -60,12 +70,27 @@
      * Loads news data and dynamically creates HTML divs from the data
      */
     function loadNewsData(csvInfo) {
-        let entries = csvInfo.split("\n");
-        let allRows = [];
         let newsClass = document.getElementsByClassName("newsRows")[0];
-        for (let i = 1; i < entries.length - 1; i++) {
-            let currRow = entries[i];
-            allRows.push(currRow);
+
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 1; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
         }
 
         for (let i = 0; i < allRows.length; i++) {
@@ -260,6 +285,154 @@
     function getCompanyHeading() {
         let companyName = localStorage.getItem("companyName");
         document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - News Posts";
+    }
+
+    function pullFromStorage(){
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + "Storage.txt";
+        var totalMonthlyData = []
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            async: false,
+            dataType: "text",
+            crossOrigin: null,
+            success: function (data) {
+                totalMonthlyData = loadMonthlyFromStorage(data);
+            }, error: function (jqXHR, exception){
+                totalMonthlyData = null;
+            }
+        });
+        return totalMonthlyData;
+    }
+
+    function correlateDataByMonth(data, fullMonth){
+        let entries = data.split("\n");
+        let startIndex = 0, stopIndex = 0;
+        for (let i = 0; i < entries.length; i++){
+            let line = entries[i];
+            if (line.trim() == fullMonth){
+                startIndex = i;
+                continue;
+            }
+            if (line.trim() == fullMonth + " FINISHED"){
+                stopIndex = i;
+                break;
+            }
+        }
+        if (startIndex == 0 && stopIndex == 0){
+            return [[],[],[]];
+        }
+        let blogs = [];
+        let news = [];
+        let socials = [];
+
+        let j = startIndex + 1;
+        let line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "NEWS"){
+                startIndex = i;
+                break;
+            }
+            blogs.push(entries[i]);
+
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "SOCIAL"){
+                startIndex = i;
+                break;
+            }
+            news.push(entries[i]);
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === fullMonth + " FINISHED"){
+                startIndex = i;
+                break;
+            }
+            socials.push(entries[i]);
+        }
+
+        let monthData = [blogs, news, socials];
+        return monthData;
+    }
+
+    function loadMonthlyFromStorage(data){
+        let totalMonthData = [];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+            'September', 'October', 'November', 'December'];
+
+        for (let i = 0; i < months.length; i++){
+            let monthData = correlateDataByMonth(data, months[i]);
+            if (monthData[0].length == 0){
+                totalMonthData.push([]);
+                continue;
+            }
+            totalMonthData.push(monthData);
+        }
+        return totalMonthData;
+    }
+
+    function getFullMonth(month){
+        switch (month){
+            case "Jan":
+                return "January";
+            case "Feb":
+                return "February";
+            case "Mar":
+                return "March";
+            case "Apr":
+                return "April";
+            case "May":
+                return "May";
+            case "Jun":
+                return "June";
+            case "Jul":
+                return "July";
+            case "Aug":
+                return "August";
+            case "Sep":
+                return "September";
+            case "Oct":
+                return "October";
+            case "Nov":
+                return "November";
+            case "Dec":
+                return "December";
+        }
+    }
+
+    function getNumericMonthFromFull(month){
+        switch (month){
+            case "January":
+                return 0;
+            case "February":
+                return 1;
+            case "March":
+                return 2;
+            case "April":
+                return 3;
+            case "May":
+                return 4;
+            case "June":
+                return 5;
+            case "July":
+                return 6;
+            case "August":
+                return 7;
+            case "September":
+                return 8;
+            case "October":
+                return 9;
+            case "November":
+                return 10;
+            case "December":
+                return 11;
+        }
     }
 
 </script>

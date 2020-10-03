@@ -27,25 +27,25 @@
 <div id="monthStructure" style = "display: none">
     <div class="row" >
         <div class="column">
-            <div class="card" id="Jan"><br><br><br><br>
+            <div class="card" id="Jan" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
             <h1 class = "MonthDesc">January</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Feb"><br><br><br><br>
+            <div class="card" id="Feb" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">February</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Mar"><br><br><br><br>
+            <div class="card" id="Mar" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">March</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Apr"><br><br><br><br>
+            <div class="card" id="Apr" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">April</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -54,25 +54,25 @@
     <br>
     <div class="row">
         <div class="column">
-            <div class="card" id="May"><br><br><br><br>
+            <div class="card" id="May" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">May</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Jun"><br><br><br><br>
+            <div class="card" id="Jun" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">June</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Jul"><br><br><br><br>
+            <div class="card" id="Jul" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">July</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Aug"><br><br><br><br>
+            <div class="card" id="Aug" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">August</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -81,25 +81,25 @@
     <br>
     <div class="row">
         <div class="column">
-            <div class="card" id="Sept"><br><br><br><br>
+            <div class="card" id="Sep" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">September</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Oct"><br><br><br><br>
+            <div class="card" id="Oct" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">October</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Nov"><br><br><br><br>
+            <div class="card" id="Nov" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">November</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Dec"><br><br><br><br>
+            <div class="card" id="Dec" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">December</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -214,7 +214,7 @@
 
 <script>
 
-
+    var refreshPageCnt = 0;
     var holdDays = [];
     var days = getDaysInMonth();
     for (let i = 0; i < days.length; i++) {
@@ -240,6 +240,38 @@
     }
     holdDays = [];
     holdDays = formattedDays;
+
+    function getDays(){
+        holdDays = [];
+        let days = getDaysByMonth(getNumericMonthFromFull(localStorage.getItem("month")));
+        for (let i = 0; i < days.length; i++) {
+            let dayEntry = [];
+            let day = days[i];
+            dayEntry.push(day)
+            dayEntry.push(0);
+            holdDays.push(dayEntry);
+        }
+        return holdDays;
+    }
+
+    function manipulateDays(){
+        holdDays = getDays();
+        for (let i = 0; i < holdDays.length; i++) {
+            let currentDate = holdDays[i];
+            let dateArr = currentDate[0].split(" ");
+            let specDay = dateArr[1];
+            let parsedDay = parseInt(specDay);
+            let charDay = parsedDay.toString();
+            let dateSequence = dateArr[0] + " " + charDay;
+            let holdDate = [];
+            holdDate.push(dateSequence);
+            holdDate.push(0);
+            formattedDays.push(holdDate);
+        }
+        holdDays = formattedDays;
+        return holdDays;
+    }
+
 
     /**
      * Reads into the CSV, extracts the dates into an array
@@ -279,22 +311,35 @@
      * @returns {[]}
      */
     function loadDateInfo(csvInfo) {
-        let entries = csvInfo.split("\n");
+        let entries;
         let allRows = [];
-        for (let i = 1; i < entries.length - 1; i++) {
-            let currRow = entries[i];
-            allRows.push(currRow);
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
         }
 
         let currDates = [];
-        for (let i = 0; i < allRows.length; i++) {   // May have to play around with the statement
+        for (let i = 0; i < allRows.length; i++) {
             let currRow = allRows[i];
             let sortedRow = currRow.split("\t");
             let date = convertDate(sortedRow[3]);
             currDates.push(date);
         }
 
-        // let holdDays = loadThirtyDayPeriod();
         for (let i = 0; i < currDates.length; i++) {
             let thisDate = currDates[i];
             let firstPart = thisDate.split(",");
@@ -333,7 +378,7 @@
             url: fileName,
             dataType: "text",
             success: function (data) {
-                var mapRes = loadMap(data, type);
+                var mapRes = loadMap(data);
                 loadedMapStats = mapRes;
             }
 
@@ -344,13 +389,28 @@
     /**
      * Pulls geographical (longitude, latitude, location) data from the csv files
      */
-    function loadMap(csvInfo, type) {
+    function loadMap(csvInfo) {
         var mapData = [];
-        let entries = csvInfo.split("\n");
+
+        let entries;
         let allRows = [];
-        for (let i = 1; i < entries.length - 1; i++) {
-            let currRow = entries[i];
-            allRows.push(currRow);
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
         }
 
         let size = allRows.length - 2;
@@ -425,6 +485,12 @@
     function loadLatestBlogPost() {
         let fileName = getCSVFileName("Blog");
         $(document).ready(function () {
+            let todaysDate = new Date().toString();
+            let dateData = todaysDate.split(" ");
+            let month = getFullMonth(dateData[1]);
+            console.log(month)
+            localStorage.setItem("month", month);
+
             $.ajax({
                 type: "GET",
                 url: fileName,
@@ -443,11 +509,19 @@
      * Extracts blog data from CSV and loads post data into the card
      */
     function extractBlogDataFromCSV(csvInfo) {
-        let entries = csvInfo.split("\n");
+        let entries;
         let allRows = [];
-        allRows.push(entries[1]);
+        try {
+            entries = csvInfo.split("\n");
+            allRows.push(entries[1]);
+        }
+        catch (exception){
+            entries = new Array(csvInfo[0]);
+            allRows.push(entries[0]);
+        }
 
         let latPost = document.getElementById("topBlog");
+        latPost.innerHTML = "";
         let imgSource, link, titleSnippet, contentSnippet, date, shares;
 
         let currRow = allRows[0];
@@ -529,12 +603,21 @@
      * Extracts news data from CSV and loads post data into the card
      */
     function extractNewsDataFromCSV(csvInfo) {
-        let entries = csvInfo.split("\n");
+        let entries;
         let allRows = [];
-        allRows.push(entries[1]);
-
+        try {
+            entries = csvInfo.split("\n");
+            allRows.push(entries[1]);
+        }
+        catch (exception){
+            entries = new Array(csvInfo[0]);
+            allRows.push(entries[0]);
+        }
 
         let latPost = document.getElementById("topNews");
+        latPost.innerHTML = "";
+
+
         let imgSource, link, titleSnippet, contentSnippet, date, shares;
 
         let currRow = allRows[0];
@@ -619,16 +702,27 @@
      * Extracts socials data from CSV and loads post data into the card
      */
     function extractSocialDataFromCSV(csvInfo) {
-        let entries = csvInfo.split("\n");
+        let entries;
         let allRows = [];
+        let currentEntry;
 
-        let socialName, retweets, shares, likes, comments, content, user, date, link, imgSrc;
-
-        let socialClass = document.getElementsByClassName("socialRows")[0];
-        for (let i = 1; i < entries.length - 1; i++) {
-            let currRow = entries[i];
-            allRows.push(currRow);
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
         }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
         allRows = reformatRows(allRows);
 
         let currRow = allRows[0];
@@ -636,6 +730,7 @@
         sortedRow = inFieldParser(sortedRow);
 
         let latPost = document.getElementById("topSocials");
+        latPost.innerHTML = "";
 
         if (sortedRow[0] === "Twitter") {
             imgSrc = "logos/twitter.png";
@@ -786,7 +881,7 @@
             let i = 0;
             while (i < csvRows.length) {
                 let currentRow = csvRows[i];
-                let separateData = currentRow.split("\t");    // wouldn't identify tab...
+                let separateData = currentRow.split("\t");
                 let socialPlatform = separateData[0];
                 if (socialPlatform === "Twitter") {
                     let nextRow = csvRows[i + 1] + ",";
@@ -903,11 +998,30 @@
         let month = getNumericMonth(dateData[1]);
         let year = parseInt(dateData[3]);
 
-        var date = new Date(year, 6, 1);
-        // var date = new Date(year, month, 1);     // REMOVE HARDCODING
+        // var date = new Date(year, 6, 1);     // Hard Coded
+        var date = new Date(year, month, 1);
         var days = [];
-        while (date.getMonth() === 6) {
-        // while (date.getMonth() === month) {      // REMOVE HARDCODING
+        // while (date.getMonth() === 6) {      // Hard Coded
+        while (date.getMonth() === month) {
+            let dailyDate = new Date(date).toString();
+            let dailyDateData = dailyDate.split(" ");
+            let formattedDate = dailyDateData[1] + " " + dailyDateData[2];
+            days.push(formattedDate);
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
+
+    function getDaysByMonth(numMonth){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = numMonth;
+        let year = parseInt(dateData[3]);
+
+        var date = new Date(year, month, 1);
+        var days = [];
+
+        while (date.getMonth() === month) {
             let dailyDate = new Date(date).toString();
             let dailyDateData = dailyDate.split(" ");
             let formattedDate = dailyDateData[1] + " " + dailyDateData[2];
@@ -962,11 +1076,14 @@
         let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
         document.getElementById("canvasContainer").innerHTML = canvas_html;
         let ctx = document.getElementById('myCanvas').getContext('2d');
-        let dailyData = parseDailyDataForFrequency()
-        let colors = getCompanyColors(companyName);
+
         let thisMonth = getCurrentMonth();
         let fullMonth = getFullMonth(thisMonth);
-        console.log(fullMonth);
+
+        let dailyData = parseDailyDataForFrequency()
+        let colors = getCompanyColors(companyName);
+        // let thisMonth = getCurrentMonth();
+        // let fullMonth = getFullMonth(thisMonth);
 
         let myLineChart = new Chart(ctx, {
             type: 'line',
@@ -1054,6 +1171,51 @@
         }
     }
 
+    function reInitMap(monthIndex, storageData) {
+        var loc = getMapLocationInfo();
+        var blogLocations = loadMap(storageData[monthIndex][0]);
+        var newsLocations = loadMap(storageData[monthIndex][0]);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4.5,
+            center: new google.maps.LatLng(39, -100),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < blogLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(blogLocations[i][2], blogLocations[i][1]),
+                map: map,
+                icon: "icons/blueMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(blogLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+        for (i = 0; i < newsLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(newsLocations[i][2], newsLocations[i][1]),
+                map: map,
+                icon: "icons/redMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(newsLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
     /**
      * Dynamically updates the color of the cards based on the company
      */
@@ -1068,16 +1230,106 @@
         }
     }
 
+    function pullFromStorage(){
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + "Storage.txt";
+        var totalMonthlyData = []
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            async: false,
+            dataType: "text",
+            crossOrigin: null,
+            success: function (data) {
+                totalMonthlyData = loadMonthlyFromStorage(data);
+            }, error: function (jqXHR, exception){
+                totalMonthlyData = null;
+            }
+        });
+        return totalMonthlyData;
+    }
+
+    function correlateDataByMonth(data, fullMonth){
+        let entries = data.split("\n");
+        let startIndex = 0, stopIndex = 0;
+        for (let i = 0; i < entries.length; i++){
+            let line = entries[i];
+            if (line.trim() == fullMonth){
+                startIndex = i;
+                continue;
+            }
+            if (line.trim() == fullMonth + " FINISHED"){
+                stopIndex = i;
+                break;
+            }
+        }
+        if (startIndex == 0 && stopIndex == 0){
+            return [[],[],[]];
+        }
+        let blogs = [];
+        let news = [];
+        let socials = [];
+
+        let j = startIndex + 1;
+        let line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "NEWS"){
+                startIndex = i;
+                break;
+            }
+            blogs.push(entries[i]);
+
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "SOCIAL"){
+                startIndex = i;
+                break;
+            }
+            news.push(entries[i]);
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === fullMonth + " FINISHED"){
+                startIndex = i;
+                break;
+            }
+            socials.push(entries[i]);
+        }
+
+        let monthData = [blogs, news, socials];
+        return monthData;
+    }
+
+    function loadMonthlyFromStorage(data){
+        let totalMonthData = [];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'];
+
+        for (let i = 0; i < months.length; i++){
+            let monthData = correlateDataByMonth(data, months[i]);
+            if (monthData[0].length == 0){
+                totalMonthData.push([]);
+                continue;
+            }
+            totalMonthData.push(monthData);
+        }
+        return totalMonthData;
+    }
+
     /**
      * Dynamically updates the shown card metrics
      */
     function updateCardStats(){
         let monthFrequency = parseDailyDataForFrequency();
+        let storageMonth = pullFromStorage();
 
         let todaysDate = new Date().toString();
         let dateData = todaysDate.split(" ");
-        // let monthIndex = getNumericMonth(dateData[1]);      // MONTH HARDCODING
-        let monthIndex = 6;
+        let monthIndex = getNumericMonth(dateData[1]);
 
         let sumPosts = 0;
         for (let i = 0; i < monthFrequency.length; i++){
@@ -1086,22 +1338,220 @@
 
         let numPosts = document.getElementsByClassName("holdPostData");
         let cards = document.getElementsByClassName("card");
+
+        if (storageMonth == null){
+            for (let i = 0; i < 12; i++){
+                if (i == monthIndex){
+                    numPosts[i].innerHTML = (sumPosts + " Posts").italics();
+                    cards[i].style.boxShadow = "0 5px 15px yellow";
+                    cards[i].addEventListener("click", emergeGraph);
+                    continue;
+                }
+                numPosts[i].innerHTML = "No Posts Available";
+            }
+            return;
+        }
+
         for (let i = 0; i < 12; i++){
-            // if (i == monthIndex){
-            if (i == 6){
+            if (i == monthIndex){
                 numPosts[i].innerHTML = (sumPosts + " Posts").italics();
                 cards[i].style.boxShadow = "0 5px 15px yellow";
                 cards[i].addEventListener("click", emergeGraph);
                 continue;
             }
-            numPosts[i].innerHTML = ("No Posts Available").bold();
+            else{
+                if (storageMonth[i].length == 0){
+                    numPosts[i].innerHTML = ("No Posts Available").bold();
+                    continue;
+                }
+                let totalPosts = storageMonth[i][0].length + storageMonth[i][1].length + storageMonth[i][2].length;
+                numPosts[i].innerHTML = (totalPosts + " Posts").italics();
+                cards[i].addEventListener("click", emergeGraph);
+            }
         }
+    }
+
+    function updateDataWithMonth(selectedMonth){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = getFullMonth(dateData[1]);
+        console.log(month)
+
+        if (getFullMonth(selectedMonth) === month && refreshPageCnt == 0){
+            return;
+        }
+
+        if (getFullMonth(selectedMonth) === month && refreshPageCnt > 0){
+            loadLatestBlogPost();
+            loadLatestNewsPost();
+            loadLatestSocialMediaPost();
+            initLineGraph(localStorage.getItem("companyName"));
+            initMap();
+            document.getElementsByClassName("mainHeading")[0].innerHTML =
+                localStorage.getItem("companyName") + " - " + month;
+
+            let monthAb = selectedMonth;
+            selectedMonth = getFullMonth(selectedMonth);
+            let monthIndex =  getNumericMonth(monthAb);
+
+            let cards = document.getElementsByClassName("card");
+            cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
+            for (let i = 0; i < 12; i++){
+                if (i == monthIndex){
+                    continue;
+                }
+                cards[i].style.boxShadow = "";
+            }
+            return;
+        }
+
+        refreshPageCnt++;
+
+        let storageData = pullFromStorage();
+        if (storageData == null){
+            return
+        }
+
+        todaysDate = new Date().toString();
+        dateData = todaysDate.split(" ");
+        month = getFullMonth(dateData[1]);
+        let monthAb = selectedMonth;
+        selectedMonth = getFullMonth(selectedMonth);
+
+        localStorage.setItem("month", selectedMonth);
+
+        let monthIndex =  getNumericMonth(monthAb);
+        if (storageData[monthIndex] == null){
+            return;
+        }
+
+        if (storageData[monthIndex].length == 0){
+            return;
+        }
+
+        updatePageFromStorage(monthIndex, storageData);
+    }
+
+    function updatePageFromStorage(monthIndex, storageData){
+        let blogs = storageData[monthIndex][0];
+        blogs.shift();
+        let news = storageData[monthIndex][1];
+        let socials = storageData[monthIndex][2];
+
+        document.getElementsByClassName("mainHeading")[0].innerHTML =
+            localStorage.getItem("companyName") + " - " + localStorage.getItem("month");
+
+        let cards = document.getElementsByClassName("card");
+        cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
+        for (let i = 0; i < 12; i++){
+            if (i == monthIndex){
+                continue;
+            }
+            cards[i].style.boxShadow = "";
+        }
+
+        extractBlogDataFromCSV(blogs);
+        extractNewsDataFromCSV(news);
+        extractSocialDataFromCSV(socials);
+        updateLineGraph(monthIndex, storageData);
+        reInitMap(monthIndex, storageData);
+
+    }
+
+    function uploadDays(monthIndex, storageData){
+        holdDays = manipulateDays();
+
+        let dailyDataB = loadDateInfo(storageData[monthIndex][0]);
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadDateInfo(storageData[monthIndex][1]);
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
+    function updateLineGraph(monthIndex, storageData){
+        let month = localStorage.getItem("month");
+        let pastDays = getDaysByMonth(getNumericMonthFromFull(month));
+        let averageGDIT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 40, 23, 68, 44, 17, 50, 25, 20, 57, 21, 37, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+        Chart.Legend.prototype.afterFit = function() {
+            this.height = this.height + 20;
+        };
+
+        let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
+        document.getElementById("canvasContainer").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+
+        let thisMonth = getCurrentMonth();
+        let fullMonth = getFullMonth(thisMonth);
+
+        let dailyData = uploadDays(monthIndex, storageData);
+        let companyName = localStorage.getItem("companyName");
+        let colors = getCompanyColors(companyName);
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: pastDays,
+                datasets: [{
+                    label: companyName + ' Activity',
+                    data: dailyData,
+                    backgroundColor: [
+                        colors[0]
+                    ],
+                    borderColor: [
+                        colors[1]
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: ' GDIT Activity',
+                    data: averageGDIT,
+                    borderColor: [
+                        'grey'
+                    ],
+                    borderWidth: 1,
+                    hidden: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+
+
     }
 
     /**
      * Reveals the graph after a month is selected
      */
     function emergeGraph(){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+
         let monthCards = document.getElementById("monthStructure");
         monthCards.style.display = "none";
 
@@ -1112,9 +1562,6 @@
 
         let graphButton = document.getElementById("manageGraph");
         graphButton.style.visibility = "visible";
-
-        let closeButton = document.getElementById("closeGraph");
-        closeButton.style.visibility = "visible";
     }
 
     /**
@@ -1131,9 +1578,6 @@
 
         let graphButton = document.getElementById("manageGraph");
         graphButton.style.visibility = "hidden";
-
-        let closeButton = document.getElementById("closeGraph");
-        closeButton.style.visibility = "hidden";
     }
 
     updateCardStats();
