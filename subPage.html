@@ -7,6 +7,7 @@
     <link href="styles.css" rel="stylesheet">
     <title id="subTitle">Competitor Page</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQDXnrjdPphrQGYAyezBYQ8edwYofHA-4&callback=initMap&libraries=&v=weekly"></script>
@@ -20,32 +21,130 @@
 </button>
 <br><br>
 
-<button class = "button" id="manageGraph" onclick = "selectMonth();" style="position: absolute; right: 270px;">Select Month</button>
+<label for="topChoice" style = "position: absolute; left: 13%; top: 6%">Select View:</label>
+<select style = "position: absolute; left: 12%; top: 8%" id="topChoice" name="topChoice" onchange="toggleTopView(this.value)">
+    <option selected="selected" value="Frequency Graph">Frequency Graph</option>
+    <option value="Trending">Trending</option>
+</select>
+
+
+<button class = "button" id="manageGraph" onclick = "selectMonth();" style="visibility: visible; position: absolute; right: 270px;">Select Month</button>
+
+<div id="canvasContainerOrig" style="display: none; width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
+    <div id="trendsList" style="border: 3px solid black; position: absolute; left: 12%; bottom: 20%; height: 66%; width: 18%;">
+        <h2 id="trendHeading" style="text-align: center">T R E N D I N G</h2><br>
+        <h3 id = "placeHolder1" style = "text-align: left; margin-left: 10%;">1. </h3>
+        <h3 id = "placeHolder2" style = "text-align: left; margin-left: 10%;">2. </h3>
+        <h3 id = "placeHolder3" style = "text-align: left; margin-left: 10%;">3. </h3>
+        <h3 id = "placeHolder4" style = "text-align: left; margin-left: 10%;">4. </h3>
+        <h3 id = "placeHolder5" style = "text-align: left; margin-left: 10%;">5. </h3>
+        <h3 id = "placeHolder6" style = "text-align: left; margin-left: 10%;">6. </h3>
+        <h3 id = "placeHolder7" style = "text-align: left; margin-left: 10%;">7. </h3>
+        <h3 id = "placeHolder8" style = "text-align: left; margin-left: 10%;">8. </h3>
+        <h3 id = "placeHolder9" style = "text-align: left; margin-left: 10%;">9. </h3>
+        <h3 id = "placeHolder10" style = "text-align: left; margin-left: 10%;">10. </h3>
+    </div>
+    <div id="frequencyBars" style="border: 3px solid black; position: absolute; bottom: 21%; left: 31%; width: 55%; height: 32%;">
+
+    </div>
+    <div id="frequencyGraph" style="border: 3px solid black; position: absolute; bottom: 54%; left: 31%; width: 55%; height: 32%;">
+        <div class = "rowTrend">
+            <div class = "columnTrend">
+                <div class = "cardTrend" style = "margin-left: 35px;"><br><br>
+                    <p id="position0">1.</p>
+                    <p id="positionN0"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionTwo " style = "margin-left: 35px;"><br><br>
+                    <p id="position1">2.</p>
+                    <p id="positionN1"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionThree" style = "margin-left: 35px;"><br><br>
+                    <p id="position2">3.</p>
+                    <p id="positionN2"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionFour" style = "margin-left: 35px;"><br><br>
+                    <p id="position3">4.</p>
+                    <p id="positionN3"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionFive" style = "margin-left: 35px;"><br><br>
+                    <p id="position4">5.</p>
+                    <p id="positionN4"></p>
+                </div>
+            </div>
+        </div>
+        <div class = "rowTrend">
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionSix" style = "margin-left: 35px;"><br><br>
+                    <p id="position5">6.</p>
+                    <p id="positionN5"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionSeven " style = "margin-left: 35px;"><br><br>
+                    <p id="position6">7.</p>
+                    <p id="positionN6"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionEight" style = "margin-left: 35px;"><br><br>
+                    <p id="position7">8.</p>
+                    <p id="positionN7"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionNine" style = "margin-left: 35px;"><br><br>
+                    <p id="position8">9.</p>
+                    <p id="positionN8"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionTen" style = "margin-left: 35px;"><br><br>
+                    <p id="position9">10.</p>
+                    <p id="positionN9"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id = "initiateTrending" style = "display: none; position: absolute; left: 43%; top: 40%;">
+    <button id="initiateButton" style="background-color: #008CBA; border: none; color: white; padding: 15px 32px;
+        text-align: center; text-decoration: none; display: inline-block; font-size: 30px; color: black;
+        height: 100px; width: 300px" onclick="initiateTrending()">Load Trending</button>
+</div>
+
 <div id="canvasContainer" style="width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
 </div>
 
 <div id="monthStructure" style = "display: none">
     <div class="row" >
         <div class="column">
-            <div class="card" id="Jan" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Jan" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
             <h1 class = "MonthDesc">January</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Feb" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Feb" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">February</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Mar" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Mar" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">March</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Apr" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Apr" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">April</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -54,25 +153,25 @@
     <br>
     <div class="row">
         <div class="column">
-            <div class="card" id="May" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="May" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">May</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Jun" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Jun" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">June</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Jul" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Jul" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">July</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Aug" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Aug" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">August</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -81,25 +180,25 @@
     <br>
     <div class="row">
         <div class="column">
-            <div class="card" id="Sep" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Sep" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">September</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Oct" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Oct" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">October</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Nov" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Nov" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">November</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
         </div>
         <div class="column">
-            <div class="card" id="Dec" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <div class="cardA" id="Dec" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
                 <h1 class = "MonthDesc">December</h1>
                 <h3 class = "holdPostData"></h3>
             </div>
@@ -116,7 +215,7 @@
     <div class="row">
         <div class="column" style="float: left; width: 33.33%;">
             <h3 style="position: relative; left: 39.5%;">Blog Posts</h3>
-            <div class="card" id="blog" onclick="navBlogs();"
+            <div class="cardA" id="blog" onclick="navBlogs();"
                  style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
                 <div id="topBlog">
                 </div>
@@ -136,7 +235,7 @@
         </div>
         <div class="column" style="float: left; width: 33.33%;">
             <h3 style="position: relative; left: 34%;">News & Press Releases</h3>
-            <div class="card" id="news" onclick="navNews();"
+            <div class="cardA" id="news" onclick="navNews();"
                  style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
                 <div id="topNews">
                 </div>
@@ -157,10 +256,10 @@
         <div class="column" style="float: left; width: 33.33%;">
             <h3 style="position: relative; left: 35%;">Social Media Events</h3>
             <label class="switch" style="margin-bottom: 20px; position: absolute;">
-                <input type="checkbox">
+                <input type="checkbox" id="toggleSocial">
                 <span class="slider"></span>
             </label>
-            <div class="card" id="socials"
+            <div class="cardA" id="socials"
                  style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
                 <div style="position: absolute; top: 0px; padding-top: 60px; padding-left: 30px;">
                     <img class="socialButtons" id="Twitter" onclick=navigateSelectedSocial(this.id)
@@ -213,6 +312,237 @@
 </body>
 
 <script>
+
+    var trendingLabels = []
+    var trendingFreq = []
+
+    function retrieveTrending(){
+        let newsFilePath = getCSVFileName("Blog")
+        let blogsFilePath = getCSVFileName("News")
+        let newsData = pullData(newsFilePath)
+        let blogsData = pullData(blogsFilePath)
+        let allData = newsData.concat(blogsData)
+        let data = []
+        let legitWords = []
+
+        for (let i = 0; i < allData.length - 1; i++){
+            let currRow = allData[i]
+            let sortedRow = currRow.split("\t");
+            let title = sortedRow[6];
+            let content = sortedRow[7];
+            data.push(title)
+            data.push(content)
+        }
+
+        let company = localStorage.getItem("companyName").toLowerCase()
+        for (let i = 0; i < data.length; i++){
+            let line = data[i].split(" ");
+            for (let j = 0; j < line.length; j++){
+                let word = line[j].toLowerCase();
+                word = stripChar(word)
+                if (word.length == 0 || word.length == 1 || word.length == 2 || word.length == 3){
+                    continue;
+                }
+                if (isCommonWord(word)){
+                    continue;
+                }
+                if (company.includes(word) || company === word){
+                    continue;
+                }
+                legitWords.push(word)
+            }
+        }
+
+        let wordsCopy = [...new Set(legitWords)]
+        let wordCount = []
+
+        for (let i = 0; i < wordsCopy.length; i++){
+            wordCount.push(0)
+        }
+
+        for (let i = 0; i < wordsCopy.length; i++){
+            let initVal = wordsCopy[i];
+            for (let j = 0; j < legitWords.length; j++){
+                let copiedWords = legitWords[j];
+                if (initVal.trim() === copiedWords.trim()){
+                    wordCount[i] += 1
+                }
+            }
+        }
+
+        let countTracker = []
+        for (let i = 0; i < wordCount.length; i++){
+            let cnt = wordCount[i]
+            if (cnt > 2){
+                countTracker.push([wordsCopy[i], cnt])
+            }
+        }
+
+        countTracker = countTracker.sort(compareCount)
+        let first = countTracker[0]
+        let second = countTracker[1]
+        let third = countTracker[2]
+        let fourth = countTracker[3]
+        let fifth = countTracker[4]
+        let sixth = countTracker[5]
+        let seventh = countTracker[6]
+        let eighth = countTracker[7]
+        let ninth = countTracker[8]
+        let tenth = countTracker[9]
+
+        document.getElementById("placeHolder1").innerHTML += first[0];
+        document.getElementById("placeHolder2").innerHTML += second[0];
+        document.getElementById("placeHolder3").innerHTML += third[0];
+        document.getElementById("placeHolder4").innerHTML += fourth[0];
+        document.getElementById("placeHolder5").innerHTML += fifth[0];
+        document.getElementById("placeHolder6").innerHTML += sixth[0];
+        document.getElementById("placeHolder7").innerHTML += seventh[0];
+        document.getElementById("placeHolder8").innerHTML += eighth[0];
+        document.getElementById("placeHolder9").innerHTML += ninth[0];
+        document.getElementById("placeHolder10").innerHTML += tenth[0];
+        company = localStorage.getItem("companyName")
+
+        for (let i = 0; i < 10; i++){
+            document.getElementById("position"+ i.toString()).innerHTML = countTracker[i][0].bold()
+            document.getElementById("positionN"+ i.toString()).innerHTML = countTracker[i][1].toString().bold().italics()
+            document.getElementsByClassName("cardTrend")[i].style.background = getCompanyColors(company)[0]
+            document.getElementsByClassName("cardTrend")[i].addEventListener("click", function(){
+                navResults(countTracker[i][0], company);
+            }, false);
+            trendingLabels.push(countTracker[i][0])
+            trendingFreq.push(countTracker[i][1])
+        }
+
+    }
+
+    function navResults(word, company){
+        localStorage.setItem("search-value", word)
+        localStorage.setItem("company-filter", company)
+        window.location.href = "results.html"
+    }
+
+    function compareCount(a, b){
+        if (a[1] < b[1]){
+            return 1
+        }
+        if (a[1] > b[1]){
+            return -1
+        }
+        return 0
+    }
+
+    //retrieveTrending()
+
+    function stripChar(word){
+        let characterRemoval =
+            ['!', '@', '#', '$', '%', '-', '_', '+', '=', '{', '[', '~',
+                '}', ']','|', '\"','.', ',', '?', '/', ':', ';', '^', '”', '“',
+                '&', '*', '(', ')']
+        for (let i = 0; i < characterRemoval.length; i++){
+            let character = characterRemoval[i]
+            if (word.includes(character)){
+                word = word.replaceAll(character, '')
+                i = 0
+            }
+        }
+        return word
+    }
+
+    function isCommonWord(word){
+        let filePath = "IntelliHubBot/stoplist.txt"
+        var wordList = []
+        $.ajax({
+            type: "GET",
+            url: filePath,
+            dataType: "text",
+            crossOrigin: null,
+            async: false,
+            success: function (data) {
+                wordList = data
+            }
+        });
+        wordList = wordList.split("\n")
+        for (let i = 0; i < wordList.length; i++){
+            let wordIndex = wordList[i].trim()
+            if (wordIndex === word){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function generateGraph() {
+        let canvas_html = '<canvas id="myCanvas2" width="8" height="2"></canvas>';
+        let company = localStorage.getItem("companyName")
+
+        document.getElementById("frequencyBars").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas2').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: trendingLabels,
+                datasets: [
+                    {
+                        label: company + "'s Top 10",
+                        data: trendingFreq,
+                        borderWidth: 1,
+                        backgroundColor: getCompanyColors(company)[0]
+                    }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function pullData(filePath){
+        var results = []
+        $.ajax({
+            type: "GET",
+            url: filePath,
+            dataType: "text",
+            crossOrigin: null,
+            async: false,
+            success: function (data) {
+                results = loadData(data);
+            }
+
+        });
+        return results;
+    }
+
+    function loadData(csvInfo){
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 1; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        return allRows;
+    }
+
+    generateGraph()
 
     var refreshPageCnt = 0;
     var holdDays = [];
@@ -302,6 +632,23 @@
         });
         return updatedDays;
 
+    }
+
+    function loadGDITDays(type){
+        let fileName = "IntelliHubBot/" + "GDIT_" + type + ".txt";
+        var updatedDays = []
+
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            dataType: "text",
+            async: false,
+            success: function (data) {
+                updatedDays = loadDateInfo(data);
+            }
+
+        });
+        return updatedDays;
     }
 
     /**
@@ -488,7 +835,6 @@
             let todaysDate = new Date().toString();
             let dateData = todaysDate.split(" ");
             let month = getFullMonth(dateData[1]);
-            console.log(month)
             localStorage.setItem("month", month);
 
             $.ajax({
@@ -1061,13 +1407,39 @@
         return totalFreq;
     }
 
+    function parseDailyDataGDIT() {
+        let dailyDataB = loadGDITDays("Blog");
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadGDITDays("News")
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
     /**
      * Uses Charts.JS to load the line graph using the frequencies
      * @param companyName
      */
     function initLineGraph(companyName) {
         let pastThirtyDays = getDaysInMonth();
-        let averageGDIT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 40, 23, 68, 44, 17, 50, 25, 20, 57, 21, 37, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let averageGDIT = parseDailyDataGDIT()
 
         Chart.Legend.prototype.afterFit = function() {
             this.height = this.height + 20;
@@ -1223,7 +1595,7 @@
         let companyName = localStorage.getItem("companyName");
         let colors = getCompanyColors(companyName);
 
-        let cards = document.getElementsByClassName("card");
+        let cards = document.getElementsByClassName("cardA");
         for (let i = 0; i < 12; i++){
             cards[i].style.background = colors[0];
             cards[i].style.border = "5px double " + colors[1];
@@ -1337,7 +1709,7 @@
         }
 
         let numPosts = document.getElementsByClassName("holdPostData");
-        let cards = document.getElementsByClassName("card");
+        let cards = document.getElementsByClassName("cardA");
 
         if (storageMonth == null){
             for (let i = 0; i < 12; i++){
@@ -1375,7 +1747,6 @@
         let todaysDate = new Date().toString();
         let dateData = todaysDate.split(" ");
         let month = getFullMonth(dateData[1]);
-        console.log(month)
 
         if (getFullMonth(selectedMonth) === month && refreshPageCnt == 0){
             return;
@@ -1394,7 +1765,7 @@
             selectedMonth = getFullMonth(selectedMonth);
             let monthIndex =  getNumericMonth(monthAb);
 
-            let cards = document.getElementsByClassName("card");
+            let cards = document.getElementsByClassName("cardA");
             cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
             for (let i = 0; i < 12; i++){
                 if (i == monthIndex){
@@ -1441,7 +1812,7 @@
         document.getElementsByClassName("mainHeading")[0].innerHTML =
             localStorage.getItem("companyName") + " - " + localStorage.getItem("month");
 
-        let cards = document.getElementsByClassName("card");
+        let cards = document.getElementsByClassName("cardA");
         cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
         for (let i = 0; i < 12; i++){
             if (i == monthIndex){
@@ -1580,12 +1951,60 @@
         graphButton.style.visibility = "hidden";
     }
 
+    var trendsLoaded = false
+
+    function toggleTopView(value){
+        if (value === "Frequency Graph"){
+            document.getElementById("initiateTrending").style.display = 'none'  // hide button
+            document.getElementById("manageGraph").style.visibility = "visible" // show graph Button
+            document.getElementById("canvasContainerOrig").style.display = "none"   // hide trending
+            document.getElementById("canvasContainer").style.display = "block"   // show graph
+            document.getElementById("canvasContainer").style.visibility = "visible"
+            initLineGraph(localStorage.getItem("companyName")); // display graph
+        }
+        else {  // if trending
+            if (!trendsLoaded){     // if button hasn't been clicked
+                document.getElementById("initiateTrending").style.display = 'block' // show button
+                document.getElementById("canvasContainer").style.visibility = "hidden"
+                document.getElementById("manageGraph").style.visibility = "hidden"  // hide graph button
+                document.getElementById("canvasContainerOrig").style.display = "none"   // hide trending
+            }
+            else{   // if button has been clicked
+                document.getElementById("initiateTrending").style.display = 'none' // hide button
+                document.getElementById("canvasContainer").style.display = "none"   // hide graph
+                document.getElementById("manageGraph").style.visibility = "hidden"  // hide graph button
+                document.getElementById("canvasContainerOrig").style.display = "block"  // show trending
+            }
+        }
+    }
+
+    function initiateTrending(){
+        if (trendsLoaded){
+            return;
+        }
+        document.getElementById("initiateTrending").style.display = 'none'
+        retrieveTrending()
+        trendsLoaded = true
+        document.getElementById("canvasContainerOrig").style.display = "block"
+        document.getElementById("canvasContainer").style.display = "none"
+    }
+
+    function updateButtonStyling(){
+        let companyColor = getCompanyColors(localStorage.getItem("companyName"))[0]
+        if (companyColor === "black"){
+            document.getElementById("initateButton").style.color = "white"
+        }
+        document.getElementById("initiateButton").style.backgroundColor =
+            getCompanyColors(localStorage.getItem("companyName"))[0]
+    }
+
     updateCardStats();
     colorCards();
     loadLatestBlogPost();
     loadLatestNewsPost();
     loadLatestSocialMediaPost();
     initLineGraph(localStorage.getItem("companyName"));
+    updateButtonStyling()
 
 </script>
 

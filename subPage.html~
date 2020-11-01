@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="subStyles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <title id="subTitle">Competitor Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQDXnrjdPphrQGYAyezBYQ8edwYofHA-4&callback=initMap&libraries=&v=weekly"></script>
+    <script src="./app.js"></script>
+    <script src="SubScripts.js"></script>
+    <h1 class="mainHeading" style="text-align: center; color: #474A4C; font-family: Visuelt;">Competitor Name</h1>
+
+</head>
+<body style="font-family: Visuelt">
+<button class = "button" id="navMain" onclick="returnHome();" style="position: absolute; right: 25px; top: 15px;">Return to Dashboard
+</button>
+<br><br>
+
+<label for="topChoice" style = "position: absolute; left: 13%; top: 6%">Select View:</label>
+<select style = "position: absolute; left: 12%; top: 8%" id="topChoice" name="topChoice" onchange="toggleTopView(this.value)">
+    <option selected="selected" value="Frequency Graph">Frequency Graph</option>
+    <option value="Trending">Trending</option>
+</select>
+
+
+<button class = "button" id="manageGraph" onclick = "selectMonth();" style="visibility: visible; position: absolute; right: 270px;">Select Month</button>
+
+<div id="canvasContainerOrig" style="display: none; width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
+    <div id="trendsList" style="border: 3px solid black; position: absolute; left: 12%; bottom: 20%; height: 66%; width: 18%;">
+        <h2 id="trendHeading" style="text-align: center">T R E N D I N G</h2><br>
+        <h3 id = "placeHolder1" style = "text-align: left; margin-left: 10%;">1. </h3>
+        <h3 id = "placeHolder2" style = "text-align: left; margin-left: 10%;">2. </h3>
+        <h3 id = "placeHolder3" style = "text-align: left; margin-left: 10%;">3. </h3>
+        <h3 id = "placeHolder4" style = "text-align: left; margin-left: 10%;">4. </h3>
+        <h3 id = "placeHolder5" style = "text-align: left; margin-left: 10%;">5. </h3>
+        <h3 id = "placeHolder6" style = "text-align: left; margin-left: 10%;">6. </h3>
+        <h3 id = "placeHolder7" style = "text-align: left; margin-left: 10%;">7. </h3>
+        <h3 id = "placeHolder8" style = "text-align: left; margin-left: 10%;">8. </h3>
+        <h3 id = "placeHolder9" style = "text-align: left; margin-left: 10%;">9. </h3>
+        <h3 id = "placeHolder10" style = "text-align: left; margin-left: 10%;">10. </h3>
+    </div>
+    <div id="frequencyBars" style="border: 3px solid black; position: absolute; bottom: 21%; left: 31%; width: 55%; height: 32%;">
+
+    </div>
+    <div id="frequencyGraph" style="border: 3px solid black; position: absolute; bottom: 54%; left: 31%; width: 55%; height: 32%;">
+        <div class = "rowTrend">
+            <div class = "columnTrend">
+                <div class = "cardTrend" style = "margin-left: 35px;"><br><br>
+                    <p id="position0">1.</p>
+                    <p id="positionN0"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionTwo " style = "margin-left: 35px;"><br><br>
+                    <p id="position1">2.</p>
+                    <p id="positionN1"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionThree" style = "margin-left: 35px;"><br><br>
+                    <p id="position2">3.</p>
+                    <p id="positionN2"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionFour" style = "margin-left: 35px;"><br><br>
+                    <p id="position3">4.</p>
+                    <p id="positionN3"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionFive" style = "margin-left: 35px;"><br><br>
+                    <p id="position4">5.</p>
+                    <p id="positionN4"></p>
+                </div>
+            </div>
+        </div>
+        <div class = "rowTrend">
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionSix" style = "margin-left: 35px;"><br><br>
+                    <p id="position5">6.</p>
+                    <p id="positionN5"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionSeven " style = "margin-left: 35px;"><br><br>
+                    <p id="position6">7.</p>
+                    <p id="positionN6"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionEight" style = "margin-left: 35px;"><br><br>
+                    <p id="position7">8.</p>
+                    <p id="positionN7"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionNine" style = "margin-left: 35px;"><br><br>
+                    <p id="position8">9.</p>
+                    <p id="positionN8"></p>
+                </div>
+            </div>
+            <div class = "columnTrend">
+                <div class = "cardTrend" id="positionTen" style = "margin-left: 35px;"><br><br>
+                    <p id="position9">10.</p>
+                    <p id="positionN9"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id = "initiateTrending" style = "display: none; position: absolute; left: 43%; top: 40%;">
+    <button style="background-color: #008CBA; border: none; color: white; padding: 15px 32px;
+        text-align: center; text-decoration: none; display: inline-block; font-size: 30px;
+        height: 100px; width: 300px" onclick="initiateTrending()">Load Trending</button>
+</div>
+
+<div id="canvasContainer" style="width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
+</div>
+
+<div id="monthStructure" style = "display: none">
+    <div class="row" >
+        <div class="column">
+            <div class="cardA" id="Jan" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+            <h1 class = "MonthDesc">January</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Feb" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">February</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Mar" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">March</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Apr" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">April</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="column">
+            <div class="cardA" id="May" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">May</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Jun" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">June</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Jul" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">July</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Aug" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">August</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="column">
+            <div class="cardA" id="Sep" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">September</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Oct" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">October</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Nov" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">November</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+        <div class="column">
+            <div class="cardA" id="Dec" onclick="updateDataWithMonth(this.id)"><br><br><br><br>
+                <h1 class = "MonthDesc">December</h1>
+                <h3 class = "holdPostData"></h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br><br><br><br><br>
+<div id="LatestPostTitle">
+    <h1 style="text-align: center">View Latest Posts: </h1>
+</div>
+<div class="categories" style="background-color: #D7DADC; padding-top: 50px; height: 700px">
+    <div class="row">
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 39.5%;">Blog Posts</h3>
+            <div class="cardA" id="blog" onclick="navBlogs();"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div id="topBlog">
+                </div>
+                <div id="middleBlog" style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="blogDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoB" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesB" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div id="bottomBlog">
+                    <h2 id="blogTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="blogContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewBlogMetric" style="background-color: #f1f1f1; position: absolute; left: 70%; top: 92%;">View Blog Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 34%;">News & Press Releases</h3>
+            <div class="cardA" id="news" onclick="navNews();"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div id="topNews">
+                </div>
+                <div id="middleNews" style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="newsDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoN" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesN" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div id="bottomNews">
+                    <h2 id="newsTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="newsContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewNewsMetric" style="background-color: #f1f1f1; position: absolute; left: 70%; top: 92%;">View News Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="column" style="float: left; width: 33.33%;">
+            <h3 style="position: relative; left: 35%;">Social Media Events</h3>
+            <label class="switch" style="margin-bottom: 20px; position: absolute;">
+                <input type="checkbox" id="toggleSocial">
+                <span class="slider"></span>
+            </label>
+            <div class="cardA" id="socials"
+                 style="position: relative; left: 7%; width: 70%; height: 500px; padding-bottom: 25%; background-color: #f1f1f1;">
+                <div style="position: absolute; top: 0px; padding-top: 60px; padding-left: 30px;">
+                    <img class="socialButtons" id="Twitter" onclick=navigateSelectedSocial(this.id)
+                         src="logos/twitter.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; top: 0px; right: 0px; padding-top: 60px; padding-right: 30px;">
+                    <img class="socialButtons" id="Instagram" onclick=navigateSelectedSocial(this.id)
+                         src="logos/instagram.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; bottom: 0px; padding-bottom: 60px; padding-left: 30px;">
+                    <img class="socialButtons" id="LinkedIn" onclick=navigateSelectedSocial(this.id)
+                         src="logos/linkedin.png"
+                         style="visibility: hidden; width: 160px; height: 160px;">
+                </div>
+                <div style="position: absolute; bottom: 0px; right: 0px; padding-bottom: 60px; padding-right: 30px;">
+                    <img ; class="socialButtons" id="Facebook"
+                         onclick=navigateSelectedSocial(this.id) src="logos/facebook.png"
+                         style="visibility: hidden; width: 160px; height: 160px">
+                </div>
+                <div class="normalCard" id="topSocials">
+                </div>
+                <div class="normalCard" id="middleSocials"
+                     style="height: 10%; width: 90%; margin: auto; border-bottom: 1px solid black;">
+                    <p id="socialsDate" style="text-align: left; margin-left: 35px;"></p>
+                    <img id="twitterLogoS" src="logos/twitterLogo.png"
+                         style="width: 30px; position: absolute; top: 42.7%; left: 80%">
+                    <p id="twitterSharesS" style="width: 30px; position: absolute; top: 41%; left: 86%"></p>
+                </div>
+                <div class="normalCard" id="bottomSocials">
+                    <h2 id="socialTitle" style="text-align: left; margin-left: 35px;"></h2>
+                    <p id="socialContents" style="text-align: left; margin-left: 35px"></p>
+                    <button class = "button" id="viewSocialMetric" onclick="navSocials()"
+                            style="background-color: #f1f1f1; position: absolute; left: 60%; top: 92%;">View Social Media Posts
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br>
+    <div id="LatestPostLocationTitle">
+        <h1 style="text-align: center">Location Intelligence: </h1>
+    </div>
+    <br>
+    <div id="map" style="margin: 0 auto; width: 1800px; height: 500px;">
+
+    </div>
+
+</body>
+
+<script>
+
+    var trendingLabels = []
+    var trendingFreq = []
+
+    function retrieveTrending(){
+        let newsFilePath = getCSVFileName("Blog")
+        let blogsFilePath = getCSVFileName("News")
+        let newsData = pullData(newsFilePath)
+        let blogsData = pullData(blogsFilePath)
+        let allData = newsData.concat(blogsData)
+        let data = []
+        let legitWords = []
+
+        for (let i = 0; i < allData.length - 1; i++){
+            let currRow = allData[i]
+            let sortedRow = currRow.split("\t");
+            let title = sortedRow[6];
+            let content = sortedRow[7];
+            data.push(title)
+            data.push(content)
+        }
+
+        let company = localStorage.getItem("companyName").toLowerCase()
+        for (let i = 0; i < data.length; i++){
+            let line = data[i].split(" ");
+            for (let j = 0; j < line.length; j++){
+                let word = line[j].toLowerCase();
+                word = stripChar(word)
+                if (word.length == 0 || word.length == 1 || word.length == 2 || word.length == 3){
+                    continue;
+                }
+                if (isCommonWord(word)){
+                    continue;
+                }
+                if (company.includes(word) || company === word){
+                    continue;
+                }
+                legitWords.push(word)
+            }
+        }
+
+        let wordsCopy = [...new Set(legitWords)]
+        let wordCount = []
+
+        for (let i = 0; i < wordsCopy.length; i++){
+            wordCount.push(0)
+        }
+
+        for (let i = 0; i < wordsCopy.length; i++){
+            let initVal = wordsCopy[i];
+            for (let j = 0; j < legitWords.length; j++){
+                let copiedWords = legitWords[j];
+                if (initVal.trim() === copiedWords.trim()){
+                    wordCount[i] += 1
+                }
+            }
+        }
+
+        let countTracker = []
+        for (let i = 0; i < wordCount.length; i++){
+            let cnt = wordCount[i]
+            if (cnt > 2){
+                countTracker.push([wordsCopy[i], cnt])
+            }
+        }
+
+        countTracker = countTracker.sort(compareCount)
+        let first = countTracker[0]
+        let second = countTracker[1]
+        let third = countTracker[2]
+        let fourth = countTracker[3]
+        let fifth = countTracker[4]
+        let sixth = countTracker[5]
+        let seventh = countTracker[6]
+        let eighth = countTracker[7]
+        let ninth = countTracker[8]
+        let tenth = countTracker[9]
+
+        document.getElementById("placeHolder1").innerHTML += first[0];
+        document.getElementById("placeHolder2").innerHTML += second[0];
+        document.getElementById("placeHolder3").innerHTML += third[0];
+        document.getElementById("placeHolder4").innerHTML += fourth[0];
+        document.getElementById("placeHolder5").innerHTML += fifth[0];
+        document.getElementById("placeHolder6").innerHTML += sixth[0];
+        document.getElementById("placeHolder7").innerHTML += seventh[0];
+        document.getElementById("placeHolder8").innerHTML += eighth[0];
+        document.getElementById("placeHolder9").innerHTML += ninth[0];
+        document.getElementById("placeHolder10").innerHTML += tenth[0];
+        company = localStorage.getItem("companyName")
+
+        for (let i = 0; i < 10; i++){
+            document.getElementById("position"+ i.toString()).innerHTML = countTracker[i][0].bold()
+            document.getElementById("positionN"+ i.toString()).innerHTML = countTracker[i][1].toString().bold().italics()
+            document.getElementsByClassName("cardTrend")[i].style.background = getCompanyColors(company)[0]
+            document.getElementsByClassName("cardTrend")[i].addEventListener("click", function(){
+                navResults(countTracker[i][0], company);
+            }, false);
+            trendingLabels.push(countTracker[i][0])
+            trendingFreq.push(countTracker[i][1])
+        }
+
+    }
+
+    function navResults(word, company){
+        localStorage.setItem("search-value", word)
+        localStorage.setItem("company-filter", company)
+        window.location.href = "results.html"
+    }
+
+    function compareCount(a, b){
+        if (a[1] < b[1]){
+            return 1
+        }
+        if (a[1] > b[1]){
+            return -1
+        }
+        return 0
+    }
+
+    //retrieveTrending()
+
+    function stripChar(word){
+        let characterRemoval =
+            ['!', '@', '#', '$', '%', '-', '_', '+', '=', '{', '[', '~',
+                '}', ']','|', '\"','.', ',', '?', '/', ':', ';', '^', '”', '“',
+                '&', '*', '(', ')']
+        for (let i = 0; i < characterRemoval.length; i++){
+            let character = characterRemoval[i]
+            if (word.includes(character)){
+                word = word.replaceAll(character, '')
+                i = 0
+            }
+        }
+        return word
+    }
+
+    function isCommonWord(word){
+        let filePath = "IntelliHubBot/stoplist.txt"
+        var wordList = []
+        $.ajax({
+            type: "GET",
+            url: filePath,
+            dataType: "text",
+            crossOrigin: null,
+            async: false,
+            success: function (data) {
+                wordList = data
+            }
+        });
+        wordList = wordList.split("\n")
+        for (let i = 0; i < wordList.length; i++){
+            let wordIndex = wordList[i].trim()
+            if (wordIndex === word){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function generateGraph() {
+        let canvas_html = '<canvas id="myCanvas2" width="8" height="2"></canvas>';
+        let company = localStorage.getItem("companyName")
+
+        document.getElementById("frequencyBars").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas2').getContext('2d');
+        let myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: trendingLabels,
+                datasets: [
+                    {
+                        label: company + "'s Top 10",
+                        data: trendingFreq,
+                        borderWidth: 1,
+                        backgroundColor: getCompanyColors(company)[0]
+                    }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function pullData(filePath){
+        var results = []
+        $.ajax({
+            type: "GET",
+            url: filePath,
+            dataType: "text",
+            crossOrigin: null,
+            async: false,
+            success: function (data) {
+                results = loadData(data);
+            }
+
+        });
+        return results;
+    }
+
+    function loadData(csvInfo){
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 1; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        return allRows;
+    }
+
+    generateGraph()
+
+    var refreshPageCnt = 0;
+    var holdDays = [];
+    var days = getDaysInMonth();
+    for (let i = 0; i < days.length; i++) {
+        let dayEntry = [];
+        let day = days[i];
+        dayEntry.push(day)
+        dayEntry.push(0);
+        holdDays.push(dayEntry);
+    }
+
+    var formattedDays = [];
+    for (let i = 0; i < holdDays.length; i++) {
+        let currentDate = holdDays[i];
+        let dateArr = currentDate[0].split(" ");
+        let specDay = dateArr[1];
+        let parsedDay = parseInt(specDay);
+        let charDay = parsedDay.toString();
+        let dateSequence = dateArr[0] + " " + charDay;
+        let holdDate = [];
+        holdDate.push(dateSequence);
+        holdDate.push(0);
+        formattedDays.push(holdDate);
+    }
+    holdDays = [];
+    holdDays = formattedDays;
+
+    function getDays(){
+        holdDays = [];
+        let days = getDaysByMonth(getNumericMonthFromFull(localStorage.getItem("month")));
+        for (let i = 0; i < days.length; i++) {
+            let dayEntry = [];
+            let day = days[i];
+            dayEntry.push(day)
+            dayEntry.push(0);
+            holdDays.push(dayEntry);
+        }
+        return holdDays;
+    }
+
+    function manipulateDays(){
+        holdDays = getDays();
+        for (let i = 0; i < holdDays.length; i++) {
+            let currentDate = holdDays[i];
+            let dateArr = currentDate[0].split(" ");
+            let specDay = dateArr[1];
+            let parsedDay = parseInt(specDay);
+            let charDay = parsedDay.toString();
+            let dateSequence = dateArr[0] + " " + charDay;
+            let holdDate = [];
+            holdDate.push(dateSequence);
+            holdDate.push(0);
+            formattedDays.push(holdDate);
+        }
+        holdDays = formattedDays;
+        return holdDays;
+    }
+
+
+    /**
+     * Reads into the CSV, extracts the dates into an array
+     * @param type
+     * @returns {[]}
+     */
+    function loadDays(type) {
+        var updatedDays = [];
+        let fileName;
+        if (type === "Blog") {
+            fileName = getCSVFileName("Blog");
+        } else if (type === "News") {
+            fileName = getCSVFileName("News");
+        } else {
+            fileName = getCSVFileName("Social");
+
+        }
+
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            dataType: "text",
+            async: false,
+            success: function (data) {
+                updatedDays = loadDateInfo(data);
+            }
+
+        });
+        return updatedDays;
+
+    }
+
+    function loadGDITDays(type){
+        let fileName = "IntelliHubBot/" + "GDIT_" + type + ".txt";
+        var updatedDays = []
+
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            dataType: "text",
+            async: false,
+            success: function (data) {
+                updatedDays = loadDateInfo(data);
+            }
+
+        });
+        return updatedDays;
+    }
+
+    /**
+     * Compares the extracted dates with the current month
+     * and updates the frequency of current dates.
+     * @param csvInfo
+     * @returns {[]}
+     */
+    function loadDateInfo(csvInfo) {
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        let currDates = [];
+        for (let i = 0; i < allRows.length; i++) {
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+            let date = convertDate(sortedRow[3]);
+            currDates.push(date);
+        }
+
+        for (let i = 0; i < currDates.length; i++) {
+            let thisDate = currDates[i];
+            let firstPart = thisDate.split(",");
+            thisDate = firstPart[0];
+            for (let j = 0; j < holdDays.length; j++) {
+                let thatDate = holdDays[j][0];
+                if (thisDate === thatDate) {
+                    holdDays[j][1]++;
+                }
+            }
+        }
+        return holdDays;
+    }
+
+    /**
+     * Extracts geographical data from the CSV to load into
+     * the google maps API
+     * @param type
+     * @returns {[]}
+     */
+    function loadMapWithLocations(type) {
+        var loadedMapStats = [];
+        let fileName;
+        if (type === "Blog") {
+            fileName = getCSVFileName("Blog");
+        } else if (type === "News") {
+            fileName = getCSVFileName("News");
+        } else {
+            fileName = getCSVFileName("Social");
+
+        }
+
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: fileName,
+            dataType: "text",
+            success: function (data) {
+                var mapRes = loadMap(data);
+                loadedMapStats = mapRes;
+            }
+
+        });
+        return loadedMapStats;
+    }
+
+    /**
+     * Pulls geographical (longitude, latitude, location) data from the csv files
+     */
+    function loadMap(csvInfo) {
+        var mapData = [];
+
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        let size = allRows.length - 2;
+        for (let i = 0; i < allRows.length - 1; i++) {
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+            let partialLocation = sortedRow[80];
+            if (partialLocation.includes(",")) {
+                let city = partialLocation.split(",");
+                partialLocation = city[0];
+            }
+            let location = partialLocation + ", " + sortedRow[79];
+            let longitude = sortedRow[81];
+            let latitude = sortedRow[82];
+            let locationInfo = [];
+            locationInfo.push(location);
+            locationInfo.push(longitude);
+            locationInfo.push(latitude);
+            mapData.push(locationInfo);
+        }
+        return mapData;
+    }
+
+
+    /**
+     * Calls the load methods and returns a final array with
+     * locations pulled from blogs and news
+     * @returns {[]}
+     */
+    function getMapLocationInfo() {
+        let totalLocations = [];
+        let locationsFromBlogs = loadMapWithLocations("Blog");
+        let locationsFromNews = loadMapWithLocations("News");
+        totalLocations.push(locationsFromBlogs);
+        totalLocations.push(locationsFromNews);
+        return totalLocations;
+    }
+
+    function navBlogs() {
+        window.location.href = "blogs.html";
+    }
+
+    function navNews() {
+        window.location.href = "newsPosts.html";
+    }
+
+    function navSocials() {
+        window.location.href = "all.html";
+    }
+
+    function returnHome() {
+        window.location.href = "index.html";
+    }
+
+    function getCompanyHeading() {
+        let companyName = localStorage.getItem("companyName");
+        let fullMonth = getFullMonth(getCurrentMonth());
+        document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - " + fullMonth;
+    }
+
+    getCompanyHeading();
+
+    function getCSVFileName(type) {
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + type + ".txt";
+        return fileName;
+
+    }
+
+    /**
+     * Loads latest blog posts into the competitor subpage card
+     */
+    function loadLatestBlogPost() {
+        let fileName = getCSVFileName("Blog");
+        $(document).ready(function () {
+            let todaysDate = new Date().toString();
+            let dateData = todaysDate.split(" ");
+            let month = getFullMonth(dateData[1]);
+            localStorage.setItem("month", month);
+
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractBlogDataFromCSV(data);
+                }
+
+            });
+        });
+
+    }
+
+    /**
+     * Extracts blog data from CSV and loads post data into the card
+     */
+    function extractBlogDataFromCSV(csvInfo) {
+        let entries;
+        let allRows = [];
+        try {
+            entries = csvInfo.split("\n");
+            allRows.push(entries[1]);
+        }
+        catch (exception){
+            entries = new Array(csvInfo[0]);
+            allRows.push(entries[0]);
+        }
+
+        let latPost = document.getElementById("topBlog");
+        latPost.innerHTML = "";
+        let imgSource, link, titleSnippet, contentSnippet, date, shares;
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+        imgSource = sortedRow[25];
+        if (imgSource.length == 0) {
+            imgSource = getUndefinedImage();
+        }
+        imgSource = sensorImages(localStorage.getItem("companyName"), imgSource);
+        link = sortedRow[11];
+        titleSnippet = sortedRow[4];
+        if (titleSnippet.length == 0){
+            titleSnippet = localStorage.getItem("companyName") + " Blog Post";
+        }
+        contentSnippet = sortedRow[5];
+        date = sortedRow[3];
+        shares = sortedRow[46];
+
+
+        let imageLinkB = document.createElement("a");
+        imageLinkB.setAttribute("id", "imageLinkB");
+        imageLinkB.href = link;
+        latPost.appendChild(imageLinkB);
+
+        let img = new Image();
+        img.src = imgSource;
+        img.setAttribute("id", "blogPic");
+        document.getElementById("imageLinkB").appendChild(img);
+
+        let bPic = document.getElementById("blogPic");
+        bPic.style.width = "100%";
+        bPic.style.height = "200px";
+
+        let loadDate = document.getElementById("blogDate");
+        date = convertDate(date);
+        loadDate.innerHTML = date;
+
+        let loadShares = document.getElementById("twitterSharesB");
+        loadShares.innerHTML = shares;
+        loadShares.style.left = getLeftStyling(shares);
+
+        let title = document.getElementById("blogTitle");
+        title.innerHTML = titleSnippet;
+        title.style.textAlign = "left";
+        title.style.width = "90%";
+        title.style.margin = "0 auto";
+        title.style.marginTop = "15px";
+
+        let contents = document.getElementById("blogContents");
+        contents.innerHTML = contentSnippet;
+        contents.style.textAlign = "left";
+        contents.style.width = "90%";
+        contents.style.margin = "0 auto";
+        contents.style.marginTop = "15px";
+
+    }
+
+    /**
+     * Receives filename, initiates the card dynamic element loading
+     */
+    function loadLatestNewsPost() {
+        let fileName = getCSVFileName("News");
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractNewsDataFromCSV(data);
+                }
+            });
+        });
+
+    }
+
+    /**
+     * Extracts news data from CSV and loads post data into the card
+     */
+    function extractNewsDataFromCSV(csvInfo) {
+        let entries;
+        let allRows = [];
+        try {
+            entries = csvInfo.split("\n");
+            allRows.push(entries[1]);
+        }
+        catch (exception){
+            entries = new Array(csvInfo[0]);
+            allRows.push(entries[0]);
+        }
+
+        let latPost = document.getElementById("topNews");
+        latPost.innerHTML = "";
+
+
+        let imgSource, link, titleSnippet, contentSnippet, date, shares;
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+
+        imgSource = sortedRow[25];
+        if (imgSource.length == 0) {
+            imgSource = getUndefinedImage();
+        }
+        imgSource = sensorImages(localStorage.getItem("companyName"), imgSource);
+        link = sortedRow[11];
+        titleSnippet = sortedRow[4];
+        if (titleSnippet.length == 0){
+            titleSnippet = localStorage.getItem("companyName") + " News Post";
+        }
+        contentSnippet = sortedRow[5];
+        date = sortedRow[3];
+        shares = (parseInt(sortedRow[35]) + parseInt(sortedRow[46])).toString();
+
+        let imageLinkN = document.createElement("a");
+        imageLinkN.setAttribute("id", "imageLinkN");
+        imageLinkN.href = link;
+        latPost.appendChild(imageLinkN);
+
+        let img = new Image();
+        img.src = imgSource;
+        img.setAttribute("id", "newsPic");
+        document.getElementById("imageLinkN").appendChild(img);
+
+        let bPic = document.getElementById("newsPic");
+        bPic.style.width = "100%";
+        bPic.style.height = "200px";
+
+        let loadDate = document.getElementById("newsDate");
+        date = convertDate(date);
+        loadDate.innerHTML = date;
+
+        let loadShares = document.getElementById("twitterSharesN");
+        loadShares.innerHTML = shares;
+        loadShares.style.left = getLeftStyling(shares);
+
+
+        let title = document.getElementById("newsTitle");
+        title.innerHTML = titleSnippet;
+        title.style.textAlign = "left";
+        title.style.width = "90%";
+        title.style.margin = "0 auto";
+        title.style.marginTop = "15px";
+
+        let contents = document.getElementById("newsContents");
+        contents.innerHTML = contentSnippet;
+        contents.style.textAlign = "left";
+        contents.style.width = "90%";
+        contents.style.margin = "0 auto";
+        contents.style.marginTop = "15px";
+
+    }
+
+
+    /**
+     * Receives filename, initiates the card dynamic element loading
+     */
+    function loadLatestSocialMediaPost() {
+        let fileName = getCSVFileName("Social");
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: fileName,
+                dataType: "text",
+                crossOrigin: null,
+                success: function (data) {
+                    extractSocialDataFromCSV(data);
+                }
+
+            });
+        });
+
+    }
+
+    /**
+     * Extracts socials data from CSV and loads post data into the card
+     */
+    function extractSocialDataFromCSV(csvInfo) {
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 0; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        allRows = reformatRows(allRows);
+
+        let currRow = allRows[0];
+        let sortedRow = currRow.split("\t");
+        sortedRow = inFieldParser(sortedRow);
+
+        let latPost = document.getElementById("topSocials");
+        latPost.innerHTML = "";
+
+        if (sortedRow[0] === "Twitter") {
+            imgSrc = "logos/twitter.png";
+            user = sortedRow[1];
+            date = sortedRow[2];
+            if (!date.includes("ago")){
+                let parsedDate = date.split(" ");
+                date = parsedDate[2];
+                date = convertDate(date);
+            }
+            link = sortedRow[3];
+            content = sortedRow[4];
+            let totalMetrics = sortedRow[6].split(",");
+
+            retweets = totalMetrics[0].trim();
+            let separationIndex = separateMetrics(retweets);
+            let numMetrics = retweets.substring(0, separationIndex);
+            retweets = numMetrics;
+            retweets = retweets.substring(1, retweets.length);
+
+            likes = totalMetrics[1];
+            separationIndex = separateMetrics(likes);
+            numMetrics = likes.substring(0, separationIndex);
+            likes = numMetrics
+            likes = likes.substring(0, likes.length);
+
+            let imageLinkS = document.createElement("a");
+            imageLinkS.setAttribute("id", "imageLinkS");
+            imageLinkS.href = link;
+            latPost.appendChild(imageLinkS);
+
+            let img = new Image();
+            img.src = imgSrc;
+            img.setAttribute("id", "socialPic");
+            document.getElementById("imageLinkS").appendChild(img);
+
+            let bPic = document.getElementById("socialPic");
+            bPic.style.width = "100%";
+            bPic.style.height = "200px";
+
+            let loadDate = document.getElementById("socialsDate");
+            loadDate.innerHTML = date;
+
+            let loadShares = document.getElementById("twitterSharesS");
+            loadShares.innerHTML = retweets;
+            loadShares.style.left = getLeftStyling(retweets);
+
+            let title = document.getElementById("socialTitle");
+            title.innerHTML = user;
+            title.style.marginTop = "15px";
+            title.style.textAlign = "left";
+            title.style.width = "90%";
+            title.style.margin = "0 auto";
+            title.style.marginTop = "15px";
+
+            let contents = document.getElementById("socialContents");
+            contents.innerHTML = content;
+            contents.style.textAlign = "left";
+            contents.style.width = "90%";
+            contents.style.margin = "0 auto";
+            contents.style.marginTop = "15px";
+
+        } else {
+            imgSrc = "logos/facebook.png";
+            user = sortedRow[1];
+            date = sortedRow[2];
+            let parsedDate = date.split(" ");
+            date = parsedDate[2];
+            date = convertDate(date) + "20";
+            link = sortedRow[3];
+            content = sortedRow[4];
+            let totalMetrics = sortedRow[6].split(",");
+
+            shares = totalMetrics[0].trim();
+            let separationIndex = separateMetrics(shares);
+            let numMetrics = shares.substring(0, separationIndex);
+            shares = numMetrics;
+            shares = shares.substring(1, shares.length);
+
+
+            let imageLinkS = document.createElement("a");
+            imageLinkS.setAttribute("id", "imageLinkS");
+            imageLinkS.href = link;
+            latPost.appendChild(imageLinkS);
+
+            let origPicture = document.getElementById("twitterLogoS");
+            origPicture.src = "logos/facebookLogo.png";
+
+            let img = new Image();
+            img.src = imgSrc;
+            img.setAttribute("id", "socialPic");
+            document.getElementById("imageLinkS").appendChild(img);
+
+            let bPic = document.getElementById("socialPic");
+            bPic.style.width = "100%";
+            bPic.style.height = "200px";
+
+            let loadDate = document.getElementById("socialsDate");
+            loadDate.innerHTML = date;
+
+            let loadShares = document.getElementById("twitterSharesS");
+            loadShares.innerHTML = shares;
+            loadShares.style.left = getLeftStyling(shares);
+
+            let title = document.getElementById("socialTitle");
+            title.innerHTML = user;
+            title.style.marginTop = "15px";
+            title.style.textAlign = "left";
+            title.style.width = "90%";
+            title.style.margin = "0 auto";
+            title.style.marginTop = "15px";
+
+            let contents = document.getElementById("socialContents");
+            contents.innerHTML = content;
+            contents.style.textAlign = "left";
+            contents.style.width = "90%";
+            contents.style.margin = "0 auto";
+            contents.style.marginTop = "15px";
+        }
+    }
+
+    /**
+     * Finds the index in which the concatenated string must be cut
+     */
+    function separateMetrics(metric) {
+        for (let i = 1; i < metric.length; i++) {
+            let character = metric[i];
+            if (!isCharDigit(character)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Takes in a char within a string, determines if its a digit.
+     */
+    function isCharDigit(n) {
+        return !!n.trim() && n > -1;
+    }
+
+    /**
+     * Reformats the format of the socials page for easier parsing
+     */
+    function reformatRows(csvRows) {
+        let newArr = [];
+        try {
+            let i = 0;
+            while (i < csvRows.length) {
+                let currentRow = csvRows[i];
+                let separateData = currentRow.split("\t");
+                let socialPlatform = separateData[0];
+                if (socialPlatform === "Twitter") {
+                    let nextRow = csvRows[i + 1] + ",";
+                    let succRow = csvRows[i + 2];
+                    let combinedRow = currentRow + "," + nextRow + succRow;
+                    newArr.push(combinedRow);
+                    i += 3;
+                } else {
+                    let nextRow = csvRows[i + 1] + ",";
+                    let succRow = csvRows[i + 2] + ",";
+                    let finalRow = csvRows[i + 3];
+                    let combinedRow = currentRow + "," + nextRow + succRow + finalRow;
+                    newArr.push(combinedRow);
+                    i += 4;
+                }
+            }
+            return newArr;
+        } catch (err) {
+            return newArr;
+        }
+    }
+
+    /**
+     * Advanced social CSV parser that ignores the infield tabs
+     */
+    function inFieldParser(csvRows) {
+        let finalArr = [];
+        let quoteCnt = 0;
+        for (let i = 0; i < csvRows.length; i++) {
+            let currRow = csvRows[i];
+            currRow = currRow.trim();
+            let combinedArr = [];
+            if (countOccurences(currRow) % 2 == 0) {
+                finalArr.push(currRow);
+                continue;
+            }
+            if (currRow[0] === "\"") {
+                quoteCnt = countOccurences(currRow);
+                while (quoteChecker(currRow, quoteCnt)) {
+                    combinedArr.push(currRow);
+                    i += 1;
+                    currRow = csvRows[i];
+                    quoteCnt += countOccurences(currRow);
+                    if (quoteCnt % 2 == 0) {
+                        combinedArr.push(currRow);
+                    }
+                }
+                let fulLStatement = "";
+                for (let i = 0; i < combinedArr.length; i++) {
+                    fulLStatement += " " + combinedArr[i];
+                }
+                finalArr.push(fulLStatement);
+            } else {
+                finalArr.push(currRow);
+            }
+        }
+        return finalArr;
+    }
+
+    /**
+     * Checks if the row contains the same amount of opening and closing braces
+     * Used within the inFieldParser function
+     */
+    function quoteChecker(row, count) {
+        if (count % 2 != 0) {
+            if ((countOccurences(row) + count % 2 != 0)) {
+                return true;
+            }
+        }
+        return false
+    }
+
+    /**
+     * Returns a count of the number of parenthesis within a row
+     * Used in the quoteChecker function
+     */
+    function countOccurences(row) {
+        try {
+            let cnt = 0;
+            for (let i = 0; i < row.length; i++) {
+                let character = row[i];
+                if (character === "\"") {
+                    cnt++;
+                }
+            }
+            return cnt;
+        } catch (Exception) {
+            return 1;
+        }
+    }
+
+    /**
+     * Reformats the data into a more readable format
+     */
+    function convertDate(date) {
+        let correctDate = "";
+        let numData = date.split("/");
+        let month = getMonth(numData[0]);
+        let day = numData[1];
+        let splitYear = numData[2].split(" ");
+        let year = splitYear[0];
+        correctDate = month + " " + day + ", " + year;
+        return correctDate + "20";
+    }
+
+    /**
+     * Identifies the current month and loads
+     * all of the days of the month into an array
+     * @returns {[]}
+     */
+    function getDaysInMonth() {
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = getNumericMonth(dateData[1]);
+        let year = parseInt(dateData[3]);
+
+        // var date = new Date(year, 6, 1);     // Hard Coded
+        var date = new Date(year, month, 1);
+        var days = [];
+        // while (date.getMonth() === 6) {      // Hard Coded
+        while (date.getMonth() === month) {
+            let dailyDate = new Date(date).toString();
+            let dailyDateData = dailyDate.split(" ");
+            let formattedDate = dailyDateData[1] + " " + dailyDateData[2];
+            days.push(formattedDate);
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
+
+    function getDaysByMonth(numMonth){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = numMonth;
+        let year = parseInt(dateData[3]);
+
+        var date = new Date(year, month, 1);
+        var days = [];
+
+        while (date.getMonth() === month) {
+            let dailyDate = new Date(date).toString();
+            let dailyDateData = dailyDate.split(" ");
+            let formattedDate = dailyDateData[1] + " " + dailyDateData[2];
+            days.push(formattedDate);
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
+
+    /**
+     * Adds all the month daily data frequencies together
+     * @returns {[]}
+     */
+    function parseDailyDataForFrequency() {
+        let dailyDataB = loadDays("Blog");
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadDays("News");
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
+    function parseDailyDataGDIT() {
+        let dailyDataB = loadGDITDays("Blog");
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadGDITDays("News")
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
+    /**
+     * Uses Charts.JS to load the line graph using the frequencies
+     * @param companyName
+     */
+    function initLineGraph(companyName) {
+        let pastThirtyDays = getDaysInMonth();
+        let averageGDIT = parseDailyDataGDIT()
+
+        Chart.Legend.prototype.afterFit = function() {
+            this.height = this.height + 20;
+        };
+
+        let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
+        document.getElementById("canvasContainer").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+
+        let thisMonth = getCurrentMonth();
+        let fullMonth = getFullMonth(thisMonth);
+
+        let dailyData = parseDailyDataForFrequency()
+        let colors = getCompanyColors(companyName);
+        // let thisMonth = getCurrentMonth();
+        // let fullMonth = getFullMonth(thisMonth);
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: pastThirtyDays,
+                datasets: [{
+                    label: companyName + ' Activity',
+                    data: dailyData,
+                    backgroundColor: [
+                        colors[0]
+                    ],
+                    borderColor: [
+                        colors[1]
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: ' GDIT Activity',
+                    data: averageGDIT,
+                    borderColor: [
+                       'grey'
+                    ],
+                    borderWidth: 1,
+                    hidden: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+
+    /**
+     * Using the google maps api, geographic data is loaded from CSVs
+     * Different marker colors are pinned depending on location source
+     */
+    function initMap() {
+        var loc = getMapLocationInfo();
+        var blogLocations = loc[0];
+        var newsLocations = loc[1];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4.5,
+            center: new google.maps.LatLng(39, -100),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < blogLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(blogLocations[i][2], blogLocations[i][1]),
+                map: map,
+                icon: "icons/blueMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(blogLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+        for (i = 0; i < newsLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(newsLocations[i][2], newsLocations[i][1]),
+                map: map,
+                icon: "icons/redMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(newsLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
+    function reInitMap(monthIndex, storageData) {
+        var loc = getMapLocationInfo();
+        var blogLocations = loadMap(storageData[monthIndex][0]);
+        var newsLocations = loadMap(storageData[monthIndex][0]);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 4.5,
+            center: new google.maps.LatLng(39, -100),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < blogLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(blogLocations[i][2], blogLocations[i][1]),
+                map: map,
+                icon: "icons/blueMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(blogLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+        for (i = 0; i < newsLocations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(newsLocations[i][2], newsLocations[i][1]),
+                map: map,
+                icon: "icons/redMarker.png"
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(newsLocations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
+    /**
+     * Dynamically updates the color of the cards based on the company
+     */
+    function colorCards(){
+        let companyName = localStorage.getItem("companyName");
+        let colors = getCompanyColors(companyName);
+
+        let cards = document.getElementsByClassName("cardA");
+        for (let i = 0; i < 12; i++){
+            cards[i].style.background = colors[0];
+            cards[i].style.border = "5px double " + colors[1];
+        }
+    }
+
+    function pullFromStorage(){
+        let fileName = "IntelliHubBot/" + localStorage.getItem("companyName") + "_" + "Storage.txt";
+        var totalMonthlyData = []
+        $.ajax({
+            type: "GET",
+            url: fileName,
+            async: false,
+            dataType: "text",
+            crossOrigin: null,
+            success: function (data) {
+                totalMonthlyData = loadMonthlyFromStorage(data);
+            }, error: function (jqXHR, exception){
+                totalMonthlyData = null;
+            }
+        });
+        return totalMonthlyData;
+    }
+
+    function correlateDataByMonth(data, fullMonth){
+        let entries = data.split("\n");
+        let startIndex = 0, stopIndex = 0;
+        for (let i = 0; i < entries.length; i++){
+            let line = entries[i];
+            if (line.trim() == fullMonth){
+                startIndex = i;
+                continue;
+            }
+            if (line.trim() == fullMonth + " FINISHED"){
+                stopIndex = i;
+                break;
+            }
+        }
+        if (startIndex == 0 && stopIndex == 0){
+            return [[],[],[]];
+        }
+        let blogs = [];
+        let news = [];
+        let socials = [];
+
+        let j = startIndex + 1;
+        let line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "NEWS"){
+                startIndex = i;
+                break;
+            }
+            blogs.push(entries[i]);
+
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === "SOCIAL"){
+                startIndex = i;
+                break;
+            }
+            news.push(entries[i]);
+        }
+
+        j = startIndex + 1;
+        line = entries[j];
+        for (let i = j; i < entries.length; i++){
+            if (entries[i].trim() === fullMonth + " FINISHED"){
+                startIndex = i;
+                break;
+            }
+            socials.push(entries[i]);
+        }
+
+        let monthData = [blogs, news, socials];
+        return monthData;
+    }
+
+    function loadMonthlyFromStorage(data){
+        let totalMonthData = [];
+        let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'];
+
+        for (let i = 0; i < months.length; i++){
+            let monthData = correlateDataByMonth(data, months[i]);
+            if (monthData[0].length == 0){
+                totalMonthData.push([]);
+                continue;
+            }
+            totalMonthData.push(monthData);
+        }
+        return totalMonthData;
+    }
+
+    /**
+     * Dynamically updates the shown card metrics
+     */
+    function updateCardStats(){
+        let monthFrequency = parseDailyDataForFrequency();
+        let storageMonth = pullFromStorage();
+
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let monthIndex = getNumericMonth(dateData[1]);
+
+        let sumPosts = 0;
+        for (let i = 0; i < monthFrequency.length; i++){
+            sumPosts = sumPosts + monthFrequency[i];
+        }
+
+        let numPosts = document.getElementsByClassName("holdPostData");
+        let cards = document.getElementsByClassName("cardA");
+
+        if (storageMonth == null){
+            for (let i = 0; i < 12; i++){
+                if (i == monthIndex){
+                    numPosts[i].innerHTML = (sumPosts + " Posts").italics();
+                    cards[i].style.boxShadow = "0 5px 15px yellow";
+                    cards[i].addEventListener("click", emergeGraph);
+                    continue;
+                }
+                numPosts[i].innerHTML = "No Posts Available";
+            }
+            return;
+        }
+
+        for (let i = 0; i < 12; i++){
+            if (i == monthIndex){
+                numPosts[i].innerHTML = (sumPosts + " Posts").italics();
+                cards[i].style.boxShadow = "0 5px 15px yellow";
+                cards[i].addEventListener("click", emergeGraph);
+                continue;
+            }
+            else{
+                if (storageMonth[i].length == 0){
+                    numPosts[i].innerHTML = ("No Posts Available").bold();
+                    continue;
+                }
+                let totalPosts = storageMonth[i][0].length + storageMonth[i][1].length + storageMonth[i][2].length;
+                numPosts[i].innerHTML = (totalPosts + " Posts").italics();
+                cards[i].addEventListener("click", emergeGraph);
+            }
+        }
+    }
+
+    function updateDataWithMonth(selectedMonth){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+        let month = getFullMonth(dateData[1]);
+
+        if (getFullMonth(selectedMonth) === month && refreshPageCnt == 0){
+            return;
+        }
+
+        if (getFullMonth(selectedMonth) === month && refreshPageCnt > 0){
+            loadLatestBlogPost();
+            loadLatestNewsPost();
+            loadLatestSocialMediaPost();
+            initLineGraph(localStorage.getItem("companyName"));
+            initMap();
+            document.getElementsByClassName("mainHeading")[0].innerHTML =
+                localStorage.getItem("companyName") + " - " + month;
+
+            let monthAb = selectedMonth;
+            selectedMonth = getFullMonth(selectedMonth);
+            let monthIndex =  getNumericMonth(monthAb);
+
+            let cards = document.getElementsByClassName("cardA");
+            cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
+            for (let i = 0; i < 12; i++){
+                if (i == monthIndex){
+                    continue;
+                }
+                cards[i].style.boxShadow = "";
+            }
+            return;
+        }
+
+        refreshPageCnt++;
+
+        let storageData = pullFromStorage();
+        if (storageData == null){
+            return
+        }
+
+        todaysDate = new Date().toString();
+        dateData = todaysDate.split(" ");
+        month = getFullMonth(dateData[1]);
+        let monthAb = selectedMonth;
+        selectedMonth = getFullMonth(selectedMonth);
+
+        localStorage.setItem("month", selectedMonth);
+
+        let monthIndex =  getNumericMonth(monthAb);
+        if (storageData[monthIndex] == null){
+            return;
+        }
+
+        if (storageData[monthIndex].length == 0){
+            return;
+        }
+
+        updatePageFromStorage(monthIndex, storageData);
+    }
+
+    function updatePageFromStorage(monthIndex, storageData){
+        let blogs = storageData[monthIndex][0];
+        blogs.shift();
+        let news = storageData[monthIndex][1];
+        let socials = storageData[monthIndex][2];
+
+        document.getElementsByClassName("mainHeading")[0].innerHTML =
+            localStorage.getItem("companyName") + " - " + localStorage.getItem("month");
+
+        let cards = document.getElementsByClassName("cardA");
+        cards[monthIndex].style.boxShadow = "0 5px 15px yellow";
+        for (let i = 0; i < 12; i++){
+            if (i == monthIndex){
+                continue;
+            }
+            cards[i].style.boxShadow = "";
+        }
+
+        extractBlogDataFromCSV(blogs);
+        extractNewsDataFromCSV(news);
+        extractSocialDataFromCSV(socials);
+        updateLineGraph(monthIndex, storageData);
+        reInitMap(monthIndex, storageData);
+
+    }
+
+    function uploadDays(monthIndex, storageData){
+        holdDays = manipulateDays();
+
+        let dailyDataB = loadDateInfo(storageData[monthIndex][0]);
+        let frequencyB = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let currentFrq = dailyDataB[i][1];
+            frequencyB.push(currentFrq)
+        }
+
+        let dailyDataN = loadDateInfo(storageData[monthIndex][1]);
+        let frequencyN = [];
+        for (let i = 0; i < dailyDataN.length; i++) {
+            let currentFrq = dailyDataN[i][1];
+            frequencyN.push(currentFrq)
+        }
+
+        let totalFreq = [];
+        for (let i = 0; i < dailyDataB.length; i++) {
+            let fB = frequencyB[i];
+            let fN = frequencyN[i];
+            let tF = fB + fN;
+            totalFreq.push(tF);
+        }
+
+        return totalFreq;
+    }
+
+    function updateLineGraph(monthIndex, storageData){
+        let month = localStorage.getItem("month");
+        let pastDays = getDaysByMonth(getNumericMonthFromFull(month));
+        let averageGDIT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 40, 23, 68, 44, 17, 50, 25, 20, 57, 21, 37, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+        Chart.Legend.prototype.afterFit = function() {
+            this.height = this.height + 20;
+        };
+
+        let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
+        document.getElementById("canvasContainer").innerHTML = canvas_html;
+        let ctx = document.getElementById('myCanvas').getContext('2d');
+
+        let thisMonth = getCurrentMonth();
+        let fullMonth = getFullMonth(thisMonth);
+
+        let dailyData = uploadDays(monthIndex, storageData);
+        let companyName = localStorage.getItem("companyName");
+        let colors = getCompanyColors(companyName);
+
+        let myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: pastDays,
+                datasets: [{
+                    label: companyName + ' Activity',
+                    data: dailyData,
+                    backgroundColor: [
+                        colors[0]
+                    ],
+                    borderColor: [
+                        colors[1]
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: ' GDIT Activity',
+                    data: averageGDIT,
+                    borderColor: [
+                        'grey'
+                    ],
+                    borderWidth: 1,
+                    hidden: true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    }
+
+    /**
+     * Reveals the graph after a month is selected
+     */
+    function emergeGraph(){
+        let todaysDate = new Date().toString();
+        let dateData = todaysDate.split(" ");
+
+        let monthCards = document.getElementById("monthStructure");
+        monthCards.style.display = "none";
+
+        let graph = document.getElementById("canvasContainer");
+        graph.style.width = "1400px";
+        graph.style.height = "600px";
+        graph.style.visibility = "visible";
+
+        let graphButton = document.getElementById("manageGraph");
+        graphButton.style.visibility = "visible";
+    }
+
+    /**
+     * Waits until user selects a month before loading the graph.
+     */
+    function selectMonth(){
+        let graph = document.getElementById("canvasContainer");
+        graph.style.width = "0px";
+        graph.style.height = "0px";
+        graph.style.visibility = "hidden";
+
+        let monthCards = document.getElementById("monthStructure");
+        monthCards.style.display = "block";
+
+        let graphButton = document.getElementById("manageGraph");
+        graphButton.style.visibility = "hidden";
+    }
+
+    var trendsLoaded = false
+
+    function toggleTopView(value){
+        if (value === "Frequency Graph"){
+            if (!trendsLoaded){
+                document.getElementById("initiateTrending").style.display = 'none'
+            }
+            else {
+                document.getElementById("manageGraph").style.visibility = "visible" // show Button
+                document.getElementById("canvasContainerOrig").style.display = "none"   // hide trending
+                document.getElementById("canvasContainer").style.display = "block"   // hide trending
+                initLineGraph(localStorage.getItem("companyName")); // display graph
+            }
+        }
+        else {
+            if (!trendsLoaded){
+                document.getElementById("initiateTrending").style.display = 'block'
+                
+            }
+            else{
+                document.getElementById("canvasContainer").style.display = "none"   // hide graph
+                document.getElementById("manageGraph").style.visibility = "hidden"  // hide button
+                document.getElementById("canvasContainerOrig").style.display = "block"
+            }
+        }
+    }
+
+    function initiateTrending(){
+        if (trendsLoaded){
+            return;
+        }
+        document.getElementById("initiateTrending").style.display = 'none'
+        retrieveTrending()
+        trendsLoaded = true
+        document.getElementById("canvasContainerOrig").style.display = "block"
+    }
+
+    updateCardStats();
+    colorCards();
+    loadLatestBlogPost();
+    loadLatestNewsPost();
+    loadLatestSocialMediaPost();
+    initLineGraph(localStorage.getItem("companyName"));
+
+</script>
+
+</html>

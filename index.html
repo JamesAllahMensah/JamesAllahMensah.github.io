@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="scripts.js"></script>
+    <script src="SubScripts.js"></script>
 </head>
 
 <body>
@@ -15,19 +16,25 @@
     <h1 class="mainHeading">IntelliHub - Competitor Intelligence Report</h1>
 </div>
 <div class="topnav">
+    <div id="search-feature" style="position: absolute; margin-top: 60px; left: 43%;">
+        <input type="search" placeholder="Enter a word or phrase..." id="search" name="result-search" style="width: 200px">
+        <button class = "button" id="res-search" onclick="queryData();">Search
+        </button>
+    </div>
     <img src="logos/longlogo.png" style="width: 20%; height: 15%;>">
     <a class="shortcut" id="blog" onclick="shortCut(this.id)">B L O G S</a>
     <a class="shortcut" id="social" onclick="shortCut(this.id)">S O C I A L S</a>
     <a class="shortcut" id="news" onclick="shortCut(this.id)">N E W S F E E D</a>
-    <a class="shortcut" id="imsight" onclick="shortCut(this.id)">I N S I G H T S</a>
+    <a class="shortcut" id="insight" onclick="shortCut(this.id)">I N S I G H T S</a>
+    <a class="shortcut" id="results" onclick="shortCut(this.id)">R E S U L T S</a>
 </div>
-
+<br><br>
 <div id="dropDown">
     <form>
         <label for="platform" style="margin: 0 auto;">Select Graph Source:</label>
         <select style = "margin-top: 5px; margin-left: 40px;" id="platform" name="platform" onchange="changeGraph(this.value); getType(this.value)">
-        <option selected="selected" value="News">News</option>
-        <option value="Blogs">Blogs</option>
+            <option selected="selected" value="News">News</option>
+            <option value="Blogs">Blogs</option>
         </select>
     </form>
 </div>
@@ -46,77 +53,65 @@
 </div>
 <br>
 <div id="appStructure">
-    <div class="row">
-        <div class="column">
-            <div class="card" id="Accenture" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/accenture.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="Booz Allen Hamilton" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/boozallen.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="CACI International" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/CACI.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="CGI Federal" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/CGI.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
+    <div class = "card" id="GDIT" onclick=loadApp(this.id);
+        style = "position: absolute; left: 30%; top: 25%; width: 35%; height: 50%">
+        <img src="logos/GDIT.png" style="width: 60%; height: 60%; margin-top: 15%;">
     </div>
-    <br>
-    <div class="row">
-        <div class="column">
-            <div class="card" id="Deloitte" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/deloitte.png" style="width: 50%; height: 50%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="Jacobs Technology" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/jacobs.png" style="width: 50%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="Leidos" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/leidos.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="ManTech" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/mantech.png" style="width: 50%; height: 30%;">
-                <br><br><br>
-            </div>
-        </div>
+    <div class="card" id="Accenture" onclick=loadApp(this.id);
+         style = "position: absolute; left: 19%; top: 8%;">
+        <img src="logos/accenture.png" style="width: 50%; height: 50%; margin-top: 15%;">
     </div>
-    <br>
-    <div class="row">
-        <div class="column">
-            <div class="card" id="Peraton" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/peraton.png" style="width: 60%; height: 30%;">
-                <br><br><br><br>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="Perspecta" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/perspecta.png" style="width: 60%; height: 30%;">
-                <br><br>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="SAIC-Engility" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/SAIC.png" style="width: 40%; height: 40%;">
-            </div>
-        </div>
-        <div class="column">
-            <div class="card" id="Lockheed Martin" onclick=loadApp(this.id);><br><br><br><br>
-                <img src="logos/lockheed.png" style="width: 50%; height: 50%;">
-            </div>
-        </div>
+
+    <div class="card" id="Booz Allen Hamilton" onclick=loadApp(this.id);
+         style = "position: absolute; left: 30%; top: 8%;">
+        <img src="logos/boozallen.png" style="width: 40%; height: 40%; margin-top: 17%;">
     </div>
+
+    <div class="card" id="CACI International" onclick=loadApp(this.id);
+         style = "position: absolute; left: 19%; top: 25%;">
+
+        <img src="logos/CACI.png" style="width: 40%; height: 40%; margin-top: 17%;">
+    </div>
+
+    <div class="card" id="CGI Federal" onclick=loadApp(this.id);
+         style = "position: absolute; right: 33%; top: 8%;">
+        <img src="logos/CGI.png" style="width: 40%; height: 40%; margin-top: 17%;">
+    </div>
+    <div class="card" id="Deloitte" onclick=loadApp(this.id);
+         style = "position: absolute; right: 22%; top: 8%;">
+        <img src="logos/deloitte.png" style="width: 50%; height: 50%; margin-top: 15%;">
+    </div>
+    <div class="card" id="Jacobs Technology" onclick=loadApp(this.id);
+         style = "position: absolute; right: 22%; top: 25%;">
+        <img src="logos/jacobs.png" style="width: 50%; height: 40%; margin-top: 16%;">
+    </div>
+    <div class="card" id="Leidos" onclick=loadApp(this.id);
+         style = "position: absolute; left: 19%; bottom: 25%;">
+                <img src="logos/leidos.png" style="width: 40%; height: 40%; margin-top: 16%;">
+    </div>
+    <div class="card" id="ManTech" onclick=loadApp(this.id);
+         style = "position: absolute; left: 19%; bottom: 8%;">
+                <img src="logos/mantech.png" style="width: 50%; height: 30%; margin-top: 16%;">
+    </div>
+    <div class="card" id="Peraton" onclick=loadApp(this.id);
+         style = "position: absolute; left: 30%; bottom: 8%;">
+                <img src="logos/peraton.png" style="width: 60%; height: 30%; margin-top: 16%;">
+    </div>
+
+    <div class="card" id="Perspecta" onclick=loadApp(this.id);
+         style = "position: absolute; right: 33%; bottom: 8%;">
+            <img src="logos/perspecta.png" style="width: 60%; height: 30%; margin-top: 17%;">
+    </div>
+    <div class="card" id="Lockheed Martin" onclick=loadApp(this.id);
+         style = "position: absolute; right: 22%; bottom: 8%;">
+        <img src="logos/lockheed.png" style="width: 50%; height: 50%; margin-top: 15%;">
+    </div>
+
+    <div class="card" id="SAIC-Engility" onclick=loadApp(this.id);
+         style = "position: absolute; right: 22%; bottom: 25%;">
+        <img src="logos/SAIC.png" style="width: 40%; height: 40%; margin-top: 17%;">
+    </div>
+</div>
 
 </div>
 
@@ -124,6 +119,22 @@
 
 <script>
 
+    function queryData(){
+        let search = document.getElementById('search').value;
+        localStorage.setItem("search-value", search)
+        localStorage.setItem("company-filter", "")
+        window.location.href = "results.html"
+    }
+
+    function getGDITOutput(){
+        let data = [];
+        let blogLength = getGDIT("Blog");
+        let newsLength = getGDIT("News")
+        data.push(blogLength);
+        data.push(newsLength);
+        console.log(data);
+        return data;
+    }
 
     /**
      * Loads post numerical data and creates graph with it
@@ -131,8 +142,9 @@
     function initNewsGraph() {
         let fullData = getGraphData();
         let newsPostData = fullData[0];
-        let newsGDIT = [338];
-        generateGraph(newsPostData, newsGDIT);
+        // let newsGDIT = [338];
+        let newsGDIT = getGDITOutput()
+        generateGraph(newsPostData, newsGDIT[1]);
     }
 
     initNewsGraph();
@@ -144,28 +156,26 @@
     function changeGraph(type) {
         let fullData = getGraphData();
         let numPosts = []
-        let gditData = [];
+        // let gditData = [];
+        let gditData = getGDITOutput()
 
         if (type !== "News" || type != "Socials" || type !== "Blogs") {
             numPosts = fullData[1];
-            gditData.push(123);
-            generateGraph(numPosts, gditData);
+            generateGraph(numPosts, gditData[1]);
         }
 
+        let output;
+
         if (type === "News") {
-            gditData = [];
+            output = gditData[1];
             numPosts = fullData[1];
-            gditData.push(122);
-            console.log("News:" + gditData);
         } else if (type === "Blogs") {
-            gditData = [];
+            output = gditData[0]
             numPosts = fullData[0];
-            gditData.push(86);
-            console.log("Blogs:" + gditData);
         } else {
             numPosts = fullData[2];
         }
-        generateGraph(numPosts, gditData);
+        generateGraph(numPosts, output);
 
     }
 
@@ -182,7 +192,7 @@
      * @param data
      */
     function generateGraph(data, compData) {
-        let initValue = compData[0];
+        let initValue = compData;
         compData = [];
         for (let i = 0; i < data.length; i++) {
             compData.push(initValue);

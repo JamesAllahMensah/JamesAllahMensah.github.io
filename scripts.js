@@ -138,8 +138,11 @@ function shortCut(section) {
         setTimeout(function () {
             document.getElementById("Warning").style.visibility = "Visible";
         }, 300);
-    } else {
+    } else if (section === "insight") {
         window.location.href = "insights.html";
+    }
+    else{
+        window.location.href = "results.html";
     }
 }
 

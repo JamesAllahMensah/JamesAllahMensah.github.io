@@ -16,6 +16,17 @@
     color: red;
 }
 
+.button1{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
 
 .socialButtons:hover{
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);

@@ -32,9 +32,10 @@
 </div>
 <div class="socialRows">
 </div>
+</body>
+</html>
 
 <script>
-
     function returnHome() {
         window.location.href = "index.html";
     }
@@ -338,6 +339,22 @@
 
             }
         }
+    }
+
+    function fixFormatting(allRows){
+        for (let i = 0; i < allRows.length; i++){
+            let currRow = allRows[i];
+            let sortedRow = currRow.split("\t");
+            sortedRow = inFieldParser(sortedRow);
+            if (sortedRow.length == 13){
+                let empty = "0Retweets,"
+                sortedRow[6] = empty+sortedRow[6];
+                let parsedRow = sortedRow[6].split(",")
+                let newPlatform = parsedRow[parsedRow.length - 1];
+                allRows.splice(i+1, 0, newPlatform.trim());
+            }
+        }
+        return allRows;
     }
 
     /**
@@ -711,7 +728,4 @@
     }
 
     getCompanyHeading();
-
 </script>
-</body>
-</html>

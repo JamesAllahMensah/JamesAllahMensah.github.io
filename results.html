@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <title>Results Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="search.js"></script>
+</head>
+<style>
+    .button{
+        border: none;
+        background: white;
+        font-family: "Visuelt";
+    }
+
+    .button:hover{
+        color: red;
+    }
+</style>
+
+<body>
+<div class="header">
+    <h2 class="mainHeading" style="font-size: 40px">Results</h2>
+</div>
+<button class = "button" id="navMain" onclick="returnHome();" style="position: absolute; right: 25px; top: 15px;">Return to Dashboard
+</button>
+<div class="topnav">
+    <img src="logos/longlogo.png" style="width: 20%; height: 15%;>">
+</div>
+<div id="search-feature" style="position: absolute;left: 37%;">
+    <input size=""50 type="search" placeholder="Enter a word or phrase..." id="search" name="result-search" style="width: 400px; height: 30px">
+    <button class = "button" id="res-search" onclick="queryData();" style="height: 30px; width: 100px;">Search
+    </button>
+</div>
+<div id = "sort-filter" style = "position: absolute; right: 8%; top: 10%;">
+    <div id = "filter" style = "">
+        <form>
+            <table>
+                <capton style = "margin-left: 40%"><b>Filter:</b></capton>
+                <tr>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterACC" name="filterAcc" value="Accenture" checked>
+                        <label for="filterAcc"> Accenture</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterBAH" name="filterBAH" value="Booz Allen Hamilton" checked>
+                        <label for="filterBAH"> Booz Allen Hamilton</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterCACI" name="filterCACI" value="CACI International" checked>
+                        <label for="filterCACI"> CACI International</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterCGI" name="filterCGI" value="CGI Federal" checked>
+                        <label for="filterCGI"> CGI Federal</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterDEL" name="filterDEL" value="Deloitte" checked>
+                        <label for="filterDEL"> Deloitte</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterJAC" name="filterJAC" value="Jacobs Technology" checked>
+                        <label for="filterJAC"> Jacobs Technology</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterLEI" name="filterLEI" value="Leidos" checked>
+                        <label for="filterLEI"> Leidos</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterMAN" name="filterMAN" value="ManTech" checked>
+                        <label for="filterMAN"> ManTech</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterPERA" name="filterPERA" value="Peraton" checked>
+                        <label for="filterPERA"> Peraton</label><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterPERS" name="filterPERS" value="Perspecta" checked>
+                        <label for="filterPERS"> Perspecta</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterSAIC" name="filterSAIC" value="SAIC-Engility" checked>
+                        <label for="filterSAIC"> SAIC-Engility</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterLCM" name="filterLCM" value="Lockheed Martin" checked>
+                        <label for="filterLCM"> Lockheed Martin</label><br>
+                    </td>
+                </tr>
+                <tr style="margin-left: 40%">
+                    <td>
+                        <input class="checkBox" type="checkbox" id="filterGDIT" name="filterGDIT" value="GDIT" checked>
+                        <label for="filterGDIT"> GDIT</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" onchange="selectAll()" type="checkbox" id="all" name="all" value="Select All" checked>
+                        <label for="all"> Select All</label><br>
+                    </td>
+                    <td>
+                        <input class="checkBox" onchange="deselectAll()" type="checkbox" id="none" name="none" value="Deselect All">
+                        <label for="none"> Deselect All</label><br>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+    <div id = "sort" style="z-index: 1; margin-top: 10%; position: absolute; margin-left: 14%">
+        <form>
+            <label for="sort-type" style=""><b>Sort By:</b></label>
+            <select id="sort-type" name="sort-type" onchange="">
+                <option selected="selected" value="Default">Default</option>
+                <option value="Newest">Newest</option>
+                <option value="Oldest">Oldest</option>
+                <option value="Most Viewed">Most Viewed</option>
+                <option value="Least Viewed">Least Viewed</option>
+            </select>
+            <button type="button" onclick="loadResults()" style = "position: absolute; margin-left: 20%">Filter Results</button>
+        </form>
+    </div>
+</div>
+
+<div id = "result-holder" style = "z-index: -1; position: relative; margin-top: 50px; margin-left: 20px; font-size: 24px;">
+    <p id="result-count"></p>
+</div>
+<br>
+
+<div class = "all-results">
+</div>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+</body>
+<script>
+    function queryData(){
+        let search = document.getElementById('search').value;
+        localStorage.setItem("company-filter", "")
+        localStorage.setItem("search-value", search)
+        window.location.href = "results.html"
+    }
+
+</script>
+</html>

@@ -12,6 +12,7 @@ var Peraton = ["Peraton", "https://www.facebook.com/PeratonCorp/", "https://twit
 var Perspecta = ["Perspecta", "https://www.facebook.com/Perspecta/", "https://twitter.com/perspecta?lang=en", "https://www.instagram.com/perspectalife/?hl=en", "https://www.linkedin.com/company/perspecta/"];
 var SAIC = ["SAIC-Engility", "https://www.facebook.com/SAICinc/", "https://twitter.com/saicinc?lang=en", "https://www.instagram.com/saicinc/?hl=en", "https://www.linkedin.com/company/saicinc/"];
 var LockheedMartin = ["Lockheed Martin", "https://www.facebook.com/lockheedmartin/", "https://twitter.com/lockheedmartin?lang=en", "https://www.instagram.com/lockheedmartin/?hl=en", "https://www.linkedin.com/company/lockheed-martin/"];
+var GDIT = ["GDIT", "https://www.facebook.com/GeneralDynamicsIT/", "https://twitter.com/GDIT?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor", "https://www.instagram.com/generaldynamicsit/?hl=en", "https://www.linkedin.com/company/gdit/mycompany/"];
 
 socialTable.push(Accenture);
 socialTable.push(BoozAllenHamilton);
@@ -31,10 +32,12 @@ socialTable.push(LockheedMartin);
  * format and the latest post presentation
  */
 document.addEventListener('DOMContentLoaded', function () {
-    var checkbox = document.querySelector('input[type="checkbox"]');
+
+    var checkbox = document.querySelectorAll('input[type="checkbox"]');
 
     checkbox.addEventListener('change', function () {
         if (checkbox.checked) {
+            console.log("AHHHHH")
             let buttons = document.getElementsByClassName("socialButtons");
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].style.visibility = "visible";
@@ -279,6 +282,39 @@ function getCompanyColors(companyName) {
             return ['rgba(0, 107, 183, 0.2)', 'rgba(0, 107, 183, 1)'];
         case "Lockheed Martin":
             return ['rgba(128, 130, 131, 0.2)', 'rgba(0, 93, 169, 1)'];
+        case "GDIT":
+            return ['grey', 'grey'];
+    }
+}
+
+function getCompanyColorsADV(companyName) {
+    switch (companyName) {
+        case "Accenture":
+            return ['rgba(172, 11, 51, 1)', 'black'];
+        case "Booz Allen Hamilton":
+            return ['rgba(4, 159, 157, 1)', 'rgba(4, 159, 157, 1)'];
+        case "CACI International":
+            return ['rgba(240, 16, 24, 1)', 'black'];
+        case "CGI Federal":
+            return ['rgba(220, 20, 52, 1)', 'rgba(220, 20, 52, 1)'];
+        case "Deloitte":
+            return ['rgba(124, 196, 68, 1)', 'black'];
+        case "Jacobs Technology":
+            return ['rgba(0, 82, 156, 1)', 'rgba(0, 82, 156, 1)'];
+        case "Leidos":
+            return ['rgba(133, 15, 137, 1)', 'rgba(133, 15, 137, 1)'];
+        case "ManTech":
+            return ['rgba(223, 35, 39, 1)', 'rgba(223, 35, 39, 1)'];
+        case "Peraton":
+            return ['rgba(49, 94, 171, 1)', 'rgba(137, 202, 130, 1)'];
+        case "Perspecta":
+            return ['rgba(15, 69, 255, 1)', 'black'];
+        case "SAIC-Engility":
+            return ['rgba(0, 107, 183, 1)', 'rgba(0, 107, 183, 1)'];
+        case "Lockheed Martin":
+            return ['rgba(128, 130, 131, 1)', 'rgba(0, 93, 169, 1)'];
+        case "GDIT":
+            return ['grey', 'grey'];
     }
 }
 
@@ -322,6 +358,9 @@ function getUndefinedImage() {
             break;
         case "Lockheed Martin":
             imageSrc += "lockheed";
+            break;
+        case "GDIT":
+            imageSrc += "GDIT";
             break;
     }
     return imageSrc + ".png";
@@ -389,4 +428,21 @@ function getLeftStyling(shares){
         return adjLength.toString() + "%";
     }
 
+}
+
+function getGDIT(type){
+    let fileName = "IntelliHubBot/" + "GDIT_" + type + ".txt";
+    var outputLength = 0;
+    $.ajax({
+        type: "GET",
+        url: fileName,
+        dataType: "text",
+        crossOrigin: null,
+        async: false,
+        success: function (data) {
+            data = data.split("\n")
+            outputLength = data.length - 2;
+        }
+    });
+    return outputLength;
 }
