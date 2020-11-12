@@ -372,11 +372,11 @@ function sortData(parsedData, sortTerm){
     }
 
     switch (sortTerm){
-        case ("Newest"):
+        case ("Oldest"):
             totalPosts = totalPosts.sort(compareNew);
             return totalPosts;
 
-        case ("Oldest"):
+        case ("Newest"):
             totalPosts = totalPosts.sort(compareNew)
             totalPosts = totalPosts.reverse();
             return totalPosts;
@@ -459,6 +459,10 @@ function deselectAll(){
             buttons[i].checked = false;
         }
     }
+}
+
+function turnOffDeselect(){
+    document.getElementById('none').checked = false;
 }
 
 function getFileNames(companyName){

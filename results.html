@@ -31,7 +31,7 @@
 </div>
 <div id="search-feature" style="position: absolute;left: 37%;">
     <input size=""50 type="search" placeholder="Enter a word or phrase..." id="search" name="result-search" style="width: 400px; height: 30px">
-    <button class = "button" id="res-search" onclick="queryData();" style="height: 30px; width: 100px;">Search
+    <button class = "buttonSearch" id="res-search" onclick="queryData();" style="height: 30px; width: 100px;">Search
     </button>
 </div>
 <div id = "sort-filter" style = "position: absolute; right: 8%; top: 10%;">
@@ -41,63 +41,63 @@
                 <capton style = "margin-left: 40%"><b>Filter:</b></capton>
                 <tr>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterACC" name="filterAcc" value="Accenture" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterACC" name="filterAcc" value="Accenture" checked>
                         <label for="filterAcc"> Accenture</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterBAH" name="filterBAH" value="Booz Allen Hamilton" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterBAH" name="filterBAH" value="Booz Allen Hamilton" checked>
                         <label for="filterBAH"> Booz Allen Hamilton</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterCACI" name="filterCACI" value="CACI International" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterCACI" name="filterCACI" value="CACI International" checked>
                         <label for="filterCACI"> CACI International</label><br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterCGI" name="filterCGI" value="CGI Federal" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterCGI" name="filterCGI" value="CGI Federal" checked>
                         <label for="filterCGI"> CGI Federal</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterDEL" name="filterDEL" value="Deloitte" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterDEL" name="filterDEL" value="Deloitte" checked>
                         <label for="filterDEL"> Deloitte</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterJAC" name="filterJAC" value="Jacobs Technology" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterJAC" name="filterJAC" value="Jacobs Technology" checked>
                         <label for="filterJAC"> Jacobs Technology</label><br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterLEI" name="filterLEI" value="Leidos" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterLEI" name="filterLEI" value="Leidos" checked>
                         <label for="filterLEI"> Leidos</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterMAN" name="filterMAN" value="ManTech" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterMAN" name="filterMAN" value="ManTech" checked>
                         <label for="filterMAN"> ManTech</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterPERA" name="filterPERA" value="Peraton" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterPERA" name="filterPERA" value="Peraton" checked>
                         <label for="filterPERA"> Peraton</label><br>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterPERS" name="filterPERS" value="Perspecta" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterPERS" name="filterPERS" value="Perspecta" checked>
                         <label for="filterPERS"> Perspecta</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterSAIC" name="filterSAIC" value="SAIC-Engility" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterSAIC" name="filterSAIC" value="SAIC-Engility" checked>
                         <label for="filterSAIC"> SAIC-Engility</label><br>
                     </td>
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterLCM" name="filterLCM" value="Lockheed Martin" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterLCM" name="filterLCM" value="Lockheed Martin" checked>
                         <label for="filterLCM"> Lockheed Martin</label><br>
                     </td>
                 </tr>
                 <tr style="margin-left: 40%">
                     <td>
-                        <input class="checkBox" type="checkbox" id="filterGDIT" name="filterGDIT" value="GDIT" checked>
+                        <input onchange="turnOffDeselect()" class="checkBox" type="checkbox" id="filterGDIT" name="filterGDIT" value="GDIT" checked>
                         <label for="filterGDIT"> GDIT</label><br>
                     </td>
                     <td>

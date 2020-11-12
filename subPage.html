@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="subStyles.css" rel="stylesheet">
     <meta charset="UTF-8">
     <link href="styles.css" rel="stylesheet">
@@ -26,7 +27,6 @@
     <option selected="selected" value="Frequency Graph">Frequency Graph</option>
     <option value="Trending">Trending</option>
 </select>
-
 
 <button class = "button" id="manageGraph" onclick = "selectMonth();" style="visibility: visible; position: absolute; right: 270px;">Select Month</button>
 
@@ -119,6 +119,10 @@
         text-align: center; text-decoration: none; display: inline-block; font-size: 30px; color: black;
         height: 100px; width: 300px" onclick="initiateTrending()">Load Trending</button>
 </div>
+<!--<div id = "trendingLoader" style="display: none; position: absolute; left: 38%; top: 28%;">-->
+<!--    <img src="icons/gdit-loader.gif">-->
+<!--</div>-->
+
 
 <div id="canvasContainer" style="width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
 </div>
@@ -430,8 +434,6 @@
         }
         return 0
     }
-
-    //retrieveTrending()
 
     function stripChar(word){
         let characterRemoval =
