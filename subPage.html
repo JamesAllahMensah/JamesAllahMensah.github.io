@@ -30,8 +30,10 @@
 
 <button class = "button" id="manageGraph" onclick = "selectMonth();" style="visibility: visible; position: absolute; right: 270px;">Select Month</button>
 
-<div id="canvasContainerOrig" style="display: none; width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
-    <div id="trendsList" style="border: 3px solid black; position: absolute; left: 12%; bottom: 20%; height: 66%; width: 18%;">
+<br><br>
+<div id="canvasContainerOrig" style="display: none; width: 1200px; height: 650px; background-color: #FFFFFF; margin: 0 auto;">
+    <h1 style="text-align: center">T R E N D I N G</h1>
+    <div id="trendsList" style="display: none; position: absolute; left: 12%; bottom: 20%; height: 66%; width: 18%;">
         <h2 id="trendHeading" style="text-align: center">T R E N D I N G</h2><br>
         <h3 id = "placeHolder1" style = "text-align: left; margin-left: 10%;">1. </h3>
         <h3 id = "placeHolder2" style = "text-align: left; margin-left: 10%;">2. </h3>
@@ -44,10 +46,10 @@
         <h3 id = "placeHolder9" style = "text-align: left; margin-left: 10%;">9. </h3>
         <h3 id = "placeHolder10" style = "text-align: left; margin-left: 10%;">10. </h3>
     </div>
-    <div id="frequencyBars" style="border: 3px solid black; position: absolute; bottom: 21%; left: 31%; width: 55%; height: 32%;">
+    <div id="frequencyBars" style=" position: absolute; bottom: 6%; left: 23%; width: 55%; height: 32%;">
 
     </div>
-    <div id="frequencyGraph" style="border: 3px solid black; position: absolute; bottom: 54%; left: 31%; width: 55%; height: 32%;">
+    <div id="frequencyGraph" style="position: absolute; bottom: 41%; left: 23%; width: 55%; height: 32%;">
         <div class = "rowTrend">
             <div class = "columnTrend">
                 <div class = "cardTrend" style = "margin-left: 35px;"><br><br>
@@ -117,11 +119,12 @@
 <div id = "initiateTrending" style = "display: none; position: absolute; left: 43%; top: 40%;">
     <button id="initiateButton" style="background-color: #008CBA; border: none; color: white; padding: 15px 32px;
         text-align: center; text-decoration: none; display: inline-block; font-size: 30px; color: black;
-        height: 100px; width: 300px" onclick="initiateTrending()">Load Trending</button>
+        height: 100px; width: 300px" >Load Trending</button>
 </div>
-<!--<div id = "trendingLoader" style="display: none; position: absolute; left: 38%; top: 28%;">-->
-<!--    <img src="icons/gdit-loader.gif">-->
-<!--</div>-->
+<!--<button id = "button-loader"> Test loading </button>-->
+<div id = "trendingLoader" style="display: none; position: absolute; left: 38%; top: 28%;">
+    <img src="icons/gdit-loader.gif">
+</div>
 
 
 <div id="canvasContainer" style="width: 1400px; height: 600px; background-color: #FFFFFF; margin: 0 auto;">
@@ -1981,6 +1984,7 @@
     }
 
     function initiateTrending(){
+        console.log("Starting")
         if (trendsLoaded){
             return;
         }
@@ -2007,6 +2011,19 @@
     loadLatestSocialMediaPost();
     initLineGraph(localStorage.getItem("companyName"));
     updateButtonStyling()
+
+    function printHello(){
+        console.log("Hello")
+    }
+
+    $('#initiateButton').click(function() {
+        console.log("button initiated")
+        $('#trendingLoader').show();
+        setTimeout(function() {
+            initiateTrending()
+            $('#trendingLoader').hide();
+        }, 0);
+    });
 
 </script>
 
