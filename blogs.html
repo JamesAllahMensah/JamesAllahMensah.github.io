@@ -49,9 +49,10 @@
      * Sends an ajax request to the file for data retrieval
      */
     $(document).ready(function () {
+        console.log(localStorage.getItem("month"));
         let todaysDate = new Date().toString();
         let dateData = todaysDate.split(" ");
-        let month = "November"
+        let month = getFullMonth(dateData[1]);
         let monthIndex = getNumericMonthFromFull(localStorage.getItem("month"));
         if (month != localStorage.getItem("month")){
             let storageData = pullFromStorage();

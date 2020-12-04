@@ -855,8 +855,7 @@
     function getCompanyHeading() {
         let companyName = localStorage.getItem("companyName");
         let fullMonth = getFullMonth(getCurrentMonth());
-        // document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - " + fullMonth;
-        document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - " + "November";
+        document.getElementsByClassName("mainHeading")[0].innerHTML = companyName + " - " + fullMonth;
     }
 
     getCompanyHeading();
@@ -876,8 +875,7 @@
             let todaysDate = new Date().toString();
             let dateData = todaysDate.split(" ");
             let month = getFullMonth(dateData[1]);
-            // localStorage.setItem("month", month);
-            localStorage.setItem("month", "November");  // MONTH HARDCODE
+            localStorage.setItem("month", month);
 
             $.ajax({
                 type: "GET",
@@ -1386,9 +1384,10 @@
         let month = getNumericMonth(dateData[1]);
         let year = parseInt(dateData[3]);
 
-        month = 10
+        // var date = new Date(year, 6, 1);     // Hard Coded
         var date = new Date(year, month, 1);
         var days = [];
+        // while (date.getMonth() === 6) {      // Hard Coded
         while (date.getMonth() === month) {
             let dailyDate = new Date(date).toString();
             let dailyDateData = dailyDate.split(" ");
@@ -1396,7 +1395,6 @@
             days.push(formattedDate);
             date.setDate(date.getDate() + 1);
         }
-        console.log(days)
         return days;
     }
 
@@ -1492,8 +1490,7 @@
         let ctx = document.getElementById('myCanvas').getContext('2d');
 
         let thisMonth = getCurrentMonth();
-        // let fullMonth = getFullMonth(thisMonth);
-        let fullMonth = getFullMonth("Nov");
+        let fullMonth = getFullMonth(thisMonth);
 
         let dailyData = parseDailyDataForFrequency()
         let colors = getCompanyColors(companyName);
@@ -1745,7 +1742,6 @@
         let todaysDate = new Date().toString();
         let dateData = todaysDate.split(" ");
         let monthIndex = getNumericMonth(dateData[1]);
-        monthIndex = 10
 
         let sumPosts = 0;
         for (let i = 0; i < monthFrequency.length; i++){
@@ -1833,7 +1829,7 @@
         let monthAb = selectedMonth;
         selectedMonth = getFullMonth(selectedMonth);
 
-        localStorage.setItem("month", "November");
+        localStorage.setItem("month", selectedMonth);
 
         let monthIndex =  getNumericMonth(monthAb);
         if (storageData[monthIndex] == null){
