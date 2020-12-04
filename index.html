@@ -25,7 +25,7 @@
     <a class="shortcut" id="blog" onclick="shortCut(this.id)">B L O G S</a>
     <a class="shortcut" id="social" onclick="shortCut(this.id)">S O C I A L S</a>
     <a class="shortcut" id="news" onclick="shortCut(this.id)">N E W S F E E D</a>
-<!--    <a class="shortcut" id="insight" onclick="shortCut(this.id)">I N S I G H T S</a>-->
+    <a class="shortcut" id="insight" onclick="shortCut(this.id)">I N S I G H T S</a>
     <a class="shortcut" id="results" onclick="shortCut(this.id)">R E S U L T S</a>
 </div>
 <br><br>
@@ -132,7 +132,8 @@
         let newsLength = getGDIT("News")
         data.push(blogLength);
         data.push(newsLength);
-        console.log(data);
+        console.log("GDIT")
+        console.log(data)
         return data;
     }
 
@@ -198,7 +199,7 @@
             compData.push(initValue);
         }
 
-        let canvas_html = '<canvas id="myCanvas" width="10" height="5;"></canvas>';
+        let canvas_html = '<canvas id="myCanvas" width="10" height="4;"></canvas>';
 
         let label, gditLabel;
         let graphType = getType(document.getElementById("platform").value);
@@ -274,5 +275,6 @@
             }
         });
     }
+
 </script>
 </html>

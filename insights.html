@@ -28,14 +28,21 @@
 
 <div class="header">
     <h1 class="mainHeading">Capability Insights</h1>
+    <img src="logos/longlogo.png" style="position: absolute; top: 0px; left: 0px; width: 20%; height: 10%;">
+    <br>
 </div>
 <button class = "button" id="navMain" onclick="returnHome();" style="position: absolute; right: 25px; top: 15px;">Return to Dashboard
 </button>
 <div class="topnav">
-    <img src="logos/longlogo.png" style="width: 20%; height: 15%;>">
     <a class="shortcut" id="Cyber" onclick = "changeCategory(this.id);">C Y B E R</a>
     <a class="shortcut" id="Artificial Intelligence" onclick = "changeCategory(this.id);">A I</a>
     <a class="shortcut" id="Cloud" onclick = "changeCategory(this.id);">C L O U D</a>
+    <a class="shortcut" id="Data & Analytics" onclick = "changeCategory(this.id);">DATA  &  ANALYTICS</a>
+    <a class="shortcut" id="Digital Modernization" onclick = "changeCategory(this.id);">DIGITAL  MODERNIZATION</a>
+    <a class="shortcut" id="Enterprise Business Solutions" onclick = "changeCategory(this.id);">ENTERPRISE  BUSINESS  SOLUTIONS</a>
+    <a class="shortcut" id="High Performance Computing" onclick = "changeCategory(this.id);">H P C</a>
+    <a class="shortcut" id="Application Services" onclick = "changeCategory(this.id);">APPLICATION  SERVICES</a>
+    <a class="shortcut" id="Managed Services" onclick = "changeCategory(this.id);">MANAGED SERVICES</a>
 </div>
 <br><br>
 <div id="numPosts">
@@ -55,19 +62,18 @@
 
 <script>
 
-    /**
-     * Gets the file name based on the type of insight
-     */
-    function getFileName(){
-        if (initGraphCnt == 1){
-            return "IntelliHubBot/Cloud.txt";
-        }
-
-        let insight = localStorage.getItem("insight");
-        return "IntelliHubBot/" + insight + ".txt";
-    }
-
+    localStorage.setItem("insight", "Cloud")
     var initGraphCnt = 0;
+    var CLOUD = reorderInsights(getTopTen("CLOUD"), null)
+    var AI = reorderInsights(getTopTen("AI"), null)
+    var CYBER = reorderInsights(getTopTen("CYBER"), null)
+    var DATA_ANALYTICS = reorderInsights(getTopTen("DATA_ANALYTICS", ["Architecture", "Data Science", "Business Intelligence"]))
+    var DIGITAL_MODERNIZATION = reorderInsights(getTopTen("DIGITAL_MODERNIZATION",["Infrastructure", "Enterprise", "Management", "Workforce Productivity", "Automation"]))
+    var ENTERPRISE_BUSINESS_SOLUTION = reorderInsights(getTopTen("ENTERPRISE_BUSINESS_SOLUTION",["Business Application", "Sustainment", "Upgrades"]))
+    var HIGH_PERFORMANCE_COMPUTING = reorderInsights(getTopTen("HIGH_PERFORMANCE_COMPUTING", ["Solutions Architecture", "HPC", "Systems Integration", "Operations", "Professional Services"]))
+    var APPLICATION_SERVICES = reorderInsights(getTopTen("APPLICATION_SERVICES",["UX", "Devsecops", "Modernization", "Agile"]))
+    var MANAGED_SERVICES = reorderInsights(getTopTen("MANAGED_SERVICES",["Managed Services"]))
+
 
     /**
      * Changes the content of the page based on the selected
@@ -97,6 +103,42 @@
 
                 case ("Cyber"):
                     localStorage.setItem("insight", "Cyber");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Data & Analytics"):
+                    localStorage.setItem("insight", "Data & Analytics");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Digital Modernization"):
+                    localStorage.setItem("insight", "Digital Modernization");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Enterprise Business Solutions"):
+                    localStorage.setItem("insight", "Enterprise Business Solutions");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("High Performance Computing"):
+                    localStorage.setItem("insight", "High Performance Computing");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Application Services"):
+                    localStorage.setItem("insight", "Application Services");
+                    clearPage();
+                    loadPage(category);
+                    return;
+
+                case ("Managed Services"):
+                    localStorage.setItem("insight", "Managed Services");
                     clearPage();
                     loadPage(category);
                     return;
@@ -169,10 +211,11 @@
      * & loads the number into the inner.HTML.
      */
     function updateNumPosts(data, category){
-        let companies = formatReportInfo(data);
+        let companies = data
+
         let postCount = 0;
         for (let i = 0; i < companies.length; i++){
-            if (companies[i].length != 5){
+            if (typeof companies[i] == 'string'){
                 continue;
             }
             postCount++;
@@ -182,15 +225,38 @@
 
         switch (category){
             case ("Cloud"):
-                statement = "CLOUD - " + postCount.toString() + " " + "POSTS!"
+                statement = "CLOUD - TOP " + postCount.toString() + " " + "POSTS!"
                 break;
 
             case ("Artificial Intelligence"):
-                statement = "AI - " + postCount.toString() + " " + "POSTS!"
+                statement = "AI - TOP " + postCount.toString() + " " + "POSTS!"
                 break;
 
             case ("Cyber"):
-                statement = "CYBER - " + postCount.toString() + " " + "POSTS!"
+                statement = "CYBER - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+            case ("Data & Analytics"):
+                statement = "Data & Analytics - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Digital Modernization"):
+                statement = "Digital Modernization - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Enterprise Business Solutions"):
+                statement = "Enterprise Business Solutions - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("High Performance Computing"):
+                statement = "High Performance Computing - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Application Services"):
+                statement = "Application Services - TOP " + postCount.toString() + " " + "POSTS!"
+                break;
+
+            case ("Managed Services"):
+                statement = "Managed Services - TOP " + postCount.toString() + " " + "POSTS!"
                 break;
         }
 
@@ -205,18 +271,36 @@
      * @returns {[]}
      */
     function locateCompanyIndexes(company){
-        var companies = [];
-        $.ajax({
-            type: "GET",
-            async: false,
-            url: getFileName(),
-            dataType: "text",
-            success: function (data) {
-                var uniqueCompanies = formatReportInfo(data);
-                companies = uniqueCompanies;
-            }
-        });
-
+        let data
+        let category = localStorage.getItem("insight")
+        if (category == "Cloud"){
+            data = CLOUD
+        }
+        else if (category == "Cyber"){
+            data = CYBER
+        }
+        else if (category == "Data & Analytics"){
+            data = DATA_ANALYTICS
+        }
+        else if (category == "Digital Modernization"){
+            data = DIGITAL_MODERNIZATION
+        }
+        else if (category == "Enterprise Business Solutions"){
+            data = ENTERPRISE_BUSINESS_SOLUTION
+        }
+        else if (category == "High Performance Computing"){
+            data = HIGH_PERFORMANCE_COMPUTING
+        }
+        else if (category == "Application Services"){
+            data = APPLICATION_SERVICES
+        }
+        else if (category == "Managed Services"){
+            data = MANAGED_SERVICES
+        }
+        else {
+            data = AI
+        }
+        let companies = data
         let indexes = [];
         let companyIndex = companies.indexOf(company);
         for (let i = companyIndex; i < companies.length - 1; i++){
@@ -236,19 +320,39 @@
      *  Loads the page with graph based on the capability
      */
     function loadPage(category){
+        let data
+        if (category == "Cloud"){
+            data = CLOUD
+        }
+        else if (category == "Cyber"){
+            data = CYBER
+        }
+        else if (category == "Data & Analytics"){
+            data = DATA_ANALYTICS
+        }
+        else if (category == "Digital Modernization"){
+            data = DIGITAL_MODERNIZATION
+        }
+        else if (category == "Enterprise Business Solutions"){
+            data = ENTERPRISE_BUSINESS_SOLUTION
+        }
+        else if (category == "High Performance Computing"){
+            data = HIGH_PERFORMANCE_COMPUTING
+        }
+        else if (category == "Application Services"){
+            data = APPLICATION_SERVICES
+        }
+        else if (category == "Managed Services"){
+            data = MANAGED_SERVICES
+        }
+        else {
+            data = AI
+        }
         initGraphCnt++;
-        $.ajax({
-            type: "GET",
-            url: getFileName(),
-            dataType: "text",
-            success: function (data) {
-                loadReports(data);
-                addToggleFunction();
-                updateNumPosts(data, category);
-                loadPieChart(data, category);
-            }
-
-        });
+        loadReports(data);
+        addToggleFunction();
+        updateNumPosts(data, category); // HERE
+        loadPieChart(category);   // HERE
     }
 
 
@@ -256,13 +360,13 @@
      * Pulls in company and post numerical data
      * as well as company colors to init a pie chart
      */
-    function loadPieChart(data, category){
-        let companies = getCompanies(data);
+    function loadPieChart(category){
+        let companies = getInsightCompanies(category)
         let sepPostNumerical = [];
         let companyColorsPrim = [];
         let companyColorsSec = [];
         for (let i = 0; i < companies.length; i++){
-            let numPosts = locateCompanyIndexes(companies[i]).length;
+            let numPosts = locateCompanyIndexes(companies[i]).length;   // HERE, create a function to co
             sepPostNumerical.push(numPosts);
             let primColor = getCompanyColors(companies[i])[0];
             primColor = primColor.substring(0, primColor.length - 4) + "0.4)";
@@ -282,6 +386,29 @@
 
             case ("Cyber"):
                 label = "Cyber Insights by Competitor";
+                break;
+            case ("Data & Analytics"):
+                label = "Data & Analytics Insights by Competitor";
+                break;
+
+            case ("Digital Modernization"):
+                label = "Digital Modernization Insights by Competitor";
+                break;
+
+            case ("Enterprise Business Solutions"):
+                label = "Enterprise Business Solutions Insights by Competitor";
+                break;
+
+            case ("High Performance Computing"):
+                label = "High Performance Computing Insights by Competitor";
+                break;
+
+            case ("Application Services"):
+                label = "Application Services Insights by Competitor";
+                break;
+
+            case ("Managed Services"):
+                label = "Managed Services Insights by Competitor";
                 break;
         }
 
@@ -308,105 +435,45 @@
         });
     }
 
-    /**
-     * Returns a list with the names of all contributing competitors
-     */
-    function getCompanies(data){
-        let dataRows = data.split("\n");
-        let presentCompanies = [];
-        let companyData = [];
-        let numPosts = dataRows.length - 1;
-        for (let i = 1; i < dataRows.length - 1; i++){
-            let currentRow = dataRows[i];
-            let parsedRow = currentRow.split("\t");
-            let companyName;
-
-            companyName = parsedRow[0];
-            presentCompanies.push(companyName);
+    function getInsightCompanies(capability){
+        if (capability == "Artificial Intelligence"){
+            capability = AI
         }
-
-        for (let i = 1; i < dataRows.length - 1; i++){
-            let dataArr = [];
-            let currentRow = dataRows[i];
-            let parsedRow = currentRow.split("\t");
-            let companyName, title, content, url, date;
-
-            companyName = parsedRow[0];
-            title = parsedRow[1];
-            content = parsedRow[2];
-            url = parsedRow[3];
-            date = parsedRow[4]
-            dataArr.push(companyName);
-            dataArr.push(title);
-            dataArr.push(content);
-            dataArr.push(url);
-            dataArr.push(date)
-            companyData.push(dataArr);
+        else if (capability == "Cyber"){
+            capability = CYBER
         }
-
-        let uniqueCompanies = [];
-        uniqueCompanies = removeDuplicates(presentCompanies);
-        return uniqueCompanies;
-    }
-
-    /**
-     * Tab delimited CSV parser
-     * Uses a 2D array to sort the contents based on competitor
-     * @param data
-     * @returns {[]}
-     */
-    function formatReportInfo(data){
-        let dataRows = data.split("\n");
-        let presentCompanies = [];
-        let companyData = [];
-        let numPosts = dataRows.length - 1;
-        for (let i = 1; i < dataRows.length - 1; i++){
-            let currentRow = dataRows[i];
-            let parsedRow = currentRow.split("\t");
-            let companyName;
-
-            companyName = parsedRow[0];
-            presentCompanies.push(companyName);
+        else if (capability == "Data & Analytics"){
+            capability = DATA_ANALYTICS
         }
-
-        for (let i = 1; i < dataRows.length - 1; i++){
-            let dataArr = [];
-            let currentRow = dataRows[i];
-            let parsedRow = currentRow.split("\t");
-            let companyName, title, content, url, date;
-
-            companyName = parsedRow[0];
-            title = parsedRow[1];
-            content = parsedRow[2];
-            url = parsedRow[3];
-            date = parsedRow[4];
-            dataArr.push(companyName);
-            dataArr.push(title);
-            dataArr.push(content);
-            dataArr.push(url);
-            dataArr.push(date);
-            companyData.push(dataArr);
+        else if (capability == "Digital Modernization"){
+            capability = DIGITAL_MODERNIZATION
         }
-
-        let uniqueCompanies = [];
-        uniqueCompanies = removeDuplicates(presentCompanies);
-
-        for (let i = 0; i < uniqueCompanies.length; i++){
-            let companyName = uniqueCompanies[i];
-            for (let j = 0; j < companyData.length; j++){
-                let compName = companyData[j][0];
-                let compData = companyData[j];
-                if (companyName === compName){
-                    let index = uniqueCompanies.indexOf(companyName) + 1;
-                    uniqueCompanies.splice(index,0,compData);
-                    companyData[j][0] = "";
-                    i = 0;
-                    j = 0;
-                }
+        else if (capability == "Enterprise Business Solutions"){
+            capability = ENTERPRISE_BUSINESS_SOLUTION
+        }
+        else if (capability == "High Performance Computing"){
+            capability = HIGH_PERFORMANCE_COMPUTING
+        }
+        else if (capability == "Application Services"){
+            capability = APPLICATION_SERVICES
+        }
+        else if (capability == "Managed Services"){
+            capability = MANAGED_SERVICES
+        }
+        else {
+            capability = CLOUD
+        }
+        let companyInsights = capability
+        let companies = []
+        for (let i = 0; i < companyInsights.length; i++){
+            let company = companyInsights[i]
+            if (typeof company === 'string'){
+                companies.push(company)
             }
         }
-        return uniqueCompanies;
+        return companies
     }
+
 
     /**
      * Receives the reformatted data and dynamically
@@ -414,8 +481,9 @@
      * includes styling
      * @param data
      */
+
     function loadReports(data){
-        let uniqueCompanies = formatReportInfo(data);
+        let uniqueCompanies = data
 
         let companyClass = document.getElementById("postStructure");
 
@@ -548,21 +616,6 @@
 
 
     /**
-     * Helper method
-     * removes the duplicates from an array
-     * @param hasDupl
-     * @returns {[]}
-     */
-    function removeDuplicates(hasDupl){
-        let emptyArr = [];
-        $.each(hasDupl, function(i, el){
-            if($.inArray(el, emptyArr) === -1) emptyArr.push(el);
-        });
-        return emptyArr;
-    }
-
-
-    /**
      * Returns the competitor logo source with the competitor name
      */
     function getUndefinedImageWithCompany(companyName) {
@@ -613,7 +666,245 @@
     }
 
     loadPage("Cloud");
-    locateCompanyIndexes();
+
+    //_____________________________________________________________________________________________________________________________________
+
+    var companies = ['GDIT', 'Accenture', 'Booz Allen Hamilton', 'CACI International', 'CGI Federal', 'Deloitte', 'Jacobs Technology',
+        'Leidos', 'ManTech', 'Peraton', 'Perspecta', 'SAIC-Engility', 'Lockheed Martin']
+
+    function getTopTen(capability, words){
+        var companies = ['GDIT', 'Accenture', 'Booz Allen Hamilton', 'CACI International', 'CGI Federal', 'Deloitte', 'Jacobs Technology',
+            'Leidos', 'ManTech', 'Peraton', 'Perspecta', 'SAIC-Engility', 'Lockheed Martin']
+        let totalPosts = []
+        let allParsedBlogs = [];
+        let allParsedNews = [];
+        for (let i = 0; i < companies.length; i++){
+            let company = companies[i];
+            let paths = getFileNames(company);
+            let blogData = pullData(paths[0]);
+            let newsData = pullData(paths[1]);
+            let parsedBlogData
+            let parsedNewsData
+            if (words == null){
+                parsedBlogData = parseData(blogData, capability);
+                parsedNewsData = parseData(newsData, capability);
+            }
+            else {
+                parsedBlogData = parseMultipleData(blogData, words);
+                parsedNewsData = parseMultipleData(newsData, words);
+            }
+            allParsedBlogs.push(parsedBlogData);
+            allParsedNews.push(parsedNewsData);
+        }
+        for (let i = 0; i < allParsedBlogs.length; i++){
+            let combinedPosts = []
+            let currentBlogPosts = allParsedBlogs[i]
+            let currentNewsPosts = allParsedNews[i]
+            combinedPosts = currentBlogPosts.concat(currentNewsPosts)
+            totalPosts.push(combinedPosts)
+        }
+
+        totalPosts = sortData(totalPosts)
+
+        let totalInsightPackage = []
+        for (let i = 0; i < 10; i++){
+            let currData = totalPosts[i]
+            let sortedRow;
+            try{
+                sortedRow = currData.split("\t");
+            }
+            catch(Exception){
+                continue;
+            }
+            let companyName = sortedRow[94]
+            let title = sortedRow[6];
+            let content = sortedRow[5];
+            let url = sortedRow[11];
+            let date = sortedRow[1].split(" ")[0]
+            let insightBundle = [companyName, title, content, url, date]
+            totalInsightPackage.push(insightBundle)
+        }
+        return totalInsightPackage
+    }
+
+
+    function reorderInsights(insight){
+        let companies = []
+        for (let i = 0; i < insight.length; i++){
+            let companyName = insight[i][0]
+            companies.push(companyName)
+        }
+        companies = [...new Set(companies)];
+        for (let i = 0; i < companies.length; i++){
+            let mainCompany = companies[i]
+            for (let j = 0; j < insight.length; j++){
+                let insightCompany = insight[j][0]
+                if (insightCompany.length == 0){
+                    continue
+                }
+                if (mainCompany == insightCompany){
+                    insight[j][0] = ""
+                    companies.splice(i+1, 0, insight[j])
+                    i = 0
+                    j = 0
+                }
+            }
+
+        }
+        return companies
+
+    }
+
+    function getFileNames(companyName){
+        let filepaths = []
+        let pathBlog = "IntelliHubBot/" + companyName + "_Blog.txt";
+        let pathNews = "IntelliHubBot/" + companyName + "_News.txt";
+        filepaths.push(pathBlog)
+        filepaths.push(pathNews)
+        return filepaths;
+    }
+
+    function pullData(filePath){
+        var results = []
+        $.ajax({
+            type: "GET",
+            url: filePath,
+            dataType: "text",
+            crossOrigin: null,
+            async: false,
+            success: function (data) {
+                results = loadData(data);
+            }
+
+        });
+        return results;
+    }
+
+    function parseMultipleData(data, words){
+        let parsedResults = [];
+        for (let i = 0; i < data.length; i++){
+            let currRow = data[i];
+            let sortedRow = currRow.split("\t");
+            let imgSource = sortedRow[25].toLowerCase();
+            let link = sortedRow[11].toLowerCase();
+            let Name = sortedRow[91].toLowerCase();
+            let title = sortedRow[6].toLowerCase();
+            let content = sortedRow[7].toLowerCase();
+            let contentSnippet = sortedRow[5].toLowerCase();
+            let titleSnippet = sortedRow[4].toLowerCase();
+
+            for (let j = 0; j < words.length; j++){
+                let word = words[j]
+                word = word.toLowerCase();
+
+                if (imgSource.includes(word) || link.includes(word) || Name.includes(word)
+                    || title.includes(word) || content.includes(word) || contentSnippet.includes(word)
+                    || titleSnippet.includes(word)){
+                    parsedResults.push(currRow);
+                    break
+                }
+
+            }
+
+        }
+        return parsedResults;
+    }
+
+    function parseData(data, word){
+        let parsedResults = [];
+        for (let i = 0; i < data.length; i++){
+            let currRow = data[i];
+            let sortedRow = currRow.split("\t");
+            let imgSource = sortedRow[25].toLowerCase();
+            let link = sortedRow[11].toLowerCase();
+            let Name = sortedRow[91].toLowerCase();
+            let title = sortedRow[6].toLowerCase();
+            let content = sortedRow[7].toLowerCase();
+            let contentSnippet = sortedRow[5].toLowerCase();
+            let titleSnippet = sortedRow[4].toLowerCase();
+
+            word = word.toLowerCase();
+
+            if (imgSource.includes(word) || link.includes(word) || Name.includes(word)
+                || title.includes(word) || content.includes(word) || contentSnippet.includes(word)
+                || titleSnippet.includes(word)){
+                parsedResults.push(currRow);
+            }
+        }
+        return parsedResults;
+    }
+
+    function sortData(parsedData){
+        var companies = ['GDIT', 'Accenture', 'Booz Allen Hamilton', 'CACI International', 'CGI Federal', 'Deloitte', 'Jacobs Technology',
+            'Leidos', 'ManTech', 'Peraton', 'Perspecta', 'SAIC-Engility', 'Lockheed Martin']
+        let totalPosts = [];
+        for (let i = 0; i < parsedData.length; i++){
+            let companyData, company;
+
+            if (i > 12){
+                companyData = parsedData[i];
+                company = companies[i - 13];
+            }
+            else{
+                companyData = parsedData[i];
+                company = companies[i];
+            }
+
+            for (let j = 0; j < companyData.length; j++){
+                let specData = companyData[j] + "\t" + company;
+                totalPosts.push(specData)
+            }
+        }
+
+        totalPosts = totalPosts.sort(comparePopularity)
+        return totalPosts;
+
+    }
+
+    function comparePopularity(a,b){
+        a = a.split("\t");
+        a = parseInt(a[46]) + parseInt(a[35]) + parseInt(a[47]) + parseInt(a[38]);
+
+        b = b.split("\t");
+        b = parseInt(b[46]) + parseInt(b[35]) + parseInt(b[47]) + parseInt(b[38]);
+
+
+        if (a > b){
+            return -1;
+        }
+        if (a < b){
+            return 1;
+        }
+        return 0;
+
+    }
+
+    function loadData(csvInfo){
+        let entries;
+        let allRows = [];
+        let currentEntry;
+
+        try {
+            entries = csvInfo.split("\n");
+            entries.shift();
+            for (let i = 0; i < entries.length - 1; i++) {
+                let currRow = entries[i];
+                allRows.push(currRow);
+            }
+        }
+        catch (exception){
+            entries = new Array(csvInfo);
+            currentEntry = new Array(entries[0]);
+            for (let i = 1; i < currentEntry[0].length - 1; i++) {
+                let currRow = entries[0][i];
+                allRows.push(currRow);
+            }
+        }
+
+        return allRows;
+    }
+
+    //________________________________________________________________________________________________________________________
 
 </script>
 </html>

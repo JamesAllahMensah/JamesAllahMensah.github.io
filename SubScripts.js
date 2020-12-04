@@ -33,11 +33,10 @@ socialTable.push(LockheedMartin);
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-    var checkbox = document.querySelectorAll('input[type="checkbox"]');
+    var checkbox = document.querySelectorAll('input[type="checkbox"]')[0];
 
     checkbox.addEventListener('change', function () {
         if (checkbox.checked) {
-            console.log("AHHHHH")
             let buttons = document.getElementsByClassName("socialButtons");
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].style.visibility = "visible";
